@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# Uploaded menus are the restaurant's data; keep them out of git.
+data/menus/
+data/tessdata/
+.claude/

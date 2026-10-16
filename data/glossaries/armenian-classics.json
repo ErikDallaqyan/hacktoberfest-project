@@ -1,0 +1,727 @@
+{
+  "name": "Armenian classics (starter)",
+  "description": "Starter glossary of Armenian dishes that generic translators routinely mangle. Copy it per restaurant and let owner corrections refine it.",
+  "entries": [
+    {
+      "id": "tolma",
+      "match": [
+        "Տոլմա",
+        "Դոլմա",
+        "Толма",
+        "Долма",
+        "tolma",
+        "dolma"
+      ],
+      "transliteration": "Tolma",
+      "translations": {
+        "en": {
+          "name": "Tolma (stuffed grape leaves)",
+          "description": "Grape leaves stuffed with minced meat, rice and herbs, served with garlic matsun (yogurt)."
+        },
+        "ru": {
+          "name": "Толма в виноградных листьях",
+          "description": "Виноградные листья с начинкой из фарша, риса и зелени, подаётся с чесночным мацуном."
+        }
+      }
+    },
+    {
+      "id": "basturma",
+      "match": [
+        "Բաստուրմա",
+        "Бастурма",
+        "basturma",
+        "pastirma"
+      ],
+      "transliteration": "Basturma",
+      "translations": {
+        "en": {
+          "name": "Basturma (spiced cured beef)",
+          "description": "Air-dried beef cured in a fenugreek-and-paprika paste (chaman), sliced paper-thin."
+        },
+        "ru": {
+          "name": "Бастурма",
+          "description": "Вяленая говядина в пряной обмазке из чамана (пажитника), тонко нарезанная."
+        }
+      }
+    },
+    {
+      "id": "chaman",
+      "match": [
+        "Չաման",
+        "Чаман",
+        "chaman"
+      ],
+      "transliteration": "Chaman",
+      "translations": {
+        "en": {
+          "name": "chaman (fenugreek spice paste)",
+          "description": "Ground fenugreek spice blend used to coat basturma."
+        },
+        "ru": {
+          "name": "чаман (пажитник)",
+          "description": "Пряность из молотого пажитника."
+        }
+      }
+    },
+    {
+      "id": "zhingyalov-hats",
+      "match": [
+        "Ժինգյալով հաց",
+        "Жингялов хац",
+        "zhingyalov hats",
+        "jingalov hats"
+      ],
+      "transliteration": "Zhingyalov Hats",
+      "translations": {
+        "en": {
+          "name": "Zhingyalov Hats (herb-stuffed flatbread)",
+          "description": "Thin flatbread filled with 15–20 kinds of chopped wild greens, a Karabakh specialty. Vegetarian."
+        },
+        "ru": {
+          "name": "Жингялов хац",
+          "description": "Тонкая лепёшка с начинкой из 15–20 видов зелени, карабахское блюдо. Вегетарианское."
+        }
+      },
+      "notes": "'Hats' means bread. Never translate as headwear."
+    },
+    {
+      "id": "khorovats",
+      "match": [
+        "Խորոված",
+        "Хоровац",
+        "khorovats",
+        "khorovac"
+      ],
+      "transliteration": "Khorovats",
+      "translations": {
+        "en": {
+          "name": "Khorovats (Armenian barbecue)",
+          "description": "Chunks of meat grilled on skewers over open coals."
+        },
+        "ru": {
+          "name": "Хоровац",
+          "description": "Мясо, жаренное на шампурах над углями."
+        }
+      }
+    },
+    {
+      "id": "chalaghaj",
+      "match": [
+        "Չալաղաջ",
+        "Чалагач",
+        "chalaghaj"
+      ],
+      "transliteration": "Chalaghaj",
+      "translations": {
+        "en": {
+          "name": "pork rib chops (chalaghaj)",
+          "description": "Bone-in pork rib cuts, the classic choice for khorovats."
+        },
+        "ru": {
+          "name": "чалагач (свиные рёбрышки)",
+          "description": "Свиные рёбрышки на косточке — классика для хороваца."
+        }
+      }
+    },
+    {
+      "id": "khashlama",
+      "match": [
+        "Խաշլամա",
+        "Хашлама",
+        "khashlama"
+      ],
+      "transliteration": "Khashlama",
+      "translations": {
+        "en": {
+          "name": "Khashlama (braised lamb with vegetables)",
+          "description": "Lamb or beef slowly stewed with vegetables in its own juices."
+        },
+        "ru": {
+          "name": "Хашлама",
+          "description": "Баранина или говядина, томлённая с овощами в собственном соку."
+        }
+      }
+    },
+    {
+      "id": "manti",
+      "match": [
+        "Մանթի",
+        "Մանտի",
+        "Манты",
+        "Манти",
+        "manti"
+      ],
+      "transliteration": "Manti",
+      "translations": {
+        "en": {
+          "name": "Armenian Manti (baked mini dumplings)",
+          "description": "Tiny open dumplings with spiced meat, baked and served in tomato broth with garlic matsun."
+        },
+        "ru": {
+          "name": "Армянские манты",
+          "description": "Маленькие запечённые лодочки из теста с мясом в томатном бульоне, с чесночным мацуном."
+        }
+      },
+      "notes": "Not the large steamed Central Asian manty."
+    },
+    {
+      "id": "ghapama",
+      "match": [
+        "Ղափամա",
+        "Ղապամա",
+        "Гапама",
+        "ghapama"
+      ],
+      "transliteration": "Ghapama",
+      "translations": {
+        "en": {
+          "name": "Ghapama (stuffed baked pumpkin)",
+          "description": "Whole pumpkin baked with rice, dried fruit, nuts and honey. Vegetarian."
+        },
+        "ru": {
+          "name": "Гапама",
+          "description": "Тыква, запечённая с рисом, сухофруктами, орехами и мёдом. Вегетарианское."
+        }
+      }
+    },
+    {
+      "id": "gata",
+      "match": [
+        "Գաթա",
+        "Гата",
+        "gata"
+      ],
+      "transliteration": "Gata",
+      "translations": {
+        "en": {
+          "name": "Gata (Armenian sweet bread)",
+          "description": "Buttery pastry with a sweet crumbly filling (khoriz)."
+        },
+        "ru": {
+          "name": "Гата",
+          "description": "Сдобная армянская выпечка со сладкой начинкой хориз."
+        }
+      }
+    },
+    {
+      "id": "khoriz",
+      "match": [
+        "Խորիզ",
+        "Хориз",
+        "khoriz"
+      ],
+      "transliteration": "Khoriz",
+      "translations": {
+        "en": {
+          "name": "khoriz (butter-sugar filling)",
+          "description": "Sweet crumbly filling of butter, flour and sugar."
+        },
+        "ru": {
+          "name": "хориз (сладкая начинка)",
+          "description": "Сладкая начинка из масла, муки и сахара."
+        }
+      }
+    },
+    {
+      "id": "pakhlava",
+      "match": [
+        "Փախլավա",
+        "Пахлава",
+        "pakhlava",
+        "baklava"
+      ],
+      "transliteration": "Pakhlava",
+      "translations": {
+        "en": {
+          "name": "Pakhlava (Armenian baklava)",
+          "description": "Layered pastry with walnuts and honey syrup."
+        },
+        "ru": {
+          "name": "Пахлава",
+          "description": "Слоёное тесто с грецкими орехами и медовым сиропом."
+        }
+      }
+    },
+    {
+      "id": "tan",
+      "match": [
+        "Թան",
+        "Тан",
+        "tan"
+      ],
+      "transliteration": "Tan",
+      "translations": {
+        "en": {
+          "name": "Tan (salted yogurt drink)",
+          "description": "Chilled, lightly salted drink of matsun (yogurt) and water."
+        },
+        "ru": {
+          "name": "Тан",
+          "description": "Охлаждённый солоноватый напиток из мацуна и воды."
+        }
+      },
+      "notes": "Not the color tan."
+    },
+    {
+      "id": "matsun",
+      "match": [
+        "Մածուն",
+        "Мацун",
+        "matsun",
+        "madzoon"
+      ],
+      "transliteration": "Matsun",
+      "translations": {
+        "en": {
+          "name": "matsun (Armenian yogurt)",
+          "description": "Tangy fermented Armenian yogurt."
+        },
+        "ru": {
+          "name": "мацун",
+          "description": "Армянский кисломолочный продукт."
+        }
+      }
+    },
+    {
+      "id": "armenian-coffee",
+      "match": [
+        "Հայկական սուրճ",
+        "Армянский кофе"
+      ],
+      "translations": {
+        "en": {
+          "name": "Armenian Coffee",
+          "description": "Finely ground coffee brewed in a jazzve, served unfiltered."
+        },
+        "ru": {
+          "name": "Армянский кофе",
+          "description": "Кофе тонкого помола, сваренный в джезве, без фильтра."
+        }
+      }
+    },
+    {
+      "id": "lavash",
+      "match": [
+        "Լավաշ",
+        "Лаваш",
+        "lavash"
+      ],
+      "transliteration": "Lavash",
+      "translations": {
+        "en": {
+          "name": "lavash (Armenian flatbread)",
+          "description": "Thin, soft flatbread baked in a clay tonir oven."
+        },
+        "ru": {
+          "name": "лаваш",
+          "description": "Тонкий хлеб, выпекаемый в тонире."
+        }
+      }
+    },
+    {
+      "id": "khash",
+      "match": [
+        "Խաշ",
+        "Хаш",
+        "khash"
+      ],
+      "transliteration": "Khash",
+      "translations": {
+        "en": {
+          "name": "Khash (slow-cooked beef broth)",
+          "description": "Rich broth of beef feet boiled overnight, eaten on winter mornings with garlic and dried lavash."
+        },
+        "ru": {
+          "name": "Хаш",
+          "description": "Наваристый бульон из говяжьих ножек, варится всю ночь; едят зимним утром с чесноком и сухим лавашем."
+        }
+      }
+    },
+    {
+      "id": "harissa",
+      "match": [
+        "Հարիսա",
+        "Ариса",
+        "Арисса",
+        "harissa",
+        "harisa"
+      ],
+      "transliteration": "Harissa",
+      "translations": {
+        "en": {
+          "name": "Harissa (wheat and chicken porridge)",
+          "description": "Thick porridge of whole wheat and chicken, stirred for hours."
+        },
+        "ru": {
+          "name": "Ариса",
+          "description": "Густая каша из пшеницы и курицы, томлённая часами."
+        }
+      },
+      "notes": "Not the North African chili paste."
+    },
+    {
+      "id": "lahmajo",
+      "match": [
+        "Լահմաջո",
+        "Лахмаджо",
+        "lahmajo",
+        "lahmacun"
+      ],
+      "transliteration": "Lahmajo",
+      "translations": {
+        "en": {
+          "name": "Lahmajo (meat-topped flatbread)",
+          "description": "Crispy thin flatbread topped with spiced minced meat, tomato and herbs."
+        },
+        "ru": {
+          "name": "Лахмаджо",
+          "description": "Тонкая хрустящая лепёшка с пряным фаршем, томатами и зеленью."
+        }
+      }
+    },
+    {
+      "id": "ishkhan",
+      "match": [
+        "Իշխան",
+        "Ишхан",
+        "ishkhan"
+      ],
+      "transliteration": "Ishkhan",
+      "translations": {
+        "en": {
+          "name": "Ishkhan (Lake Sevan trout)",
+          "description": "Trout from Lake Sevan, usually grilled whole."
+        },
+        "ru": {
+          "name": "Ишхан (севанская форель)",
+          "description": "Форель с озера Севан, обычно на гриле."
+        }
+      },
+      "notes": "Literally 'prince'. Never translate literally."
+    },
+    {
+      "id": "spas",
+      "match": [
+        "Սպաս",
+        "Спас",
+        "spas"
+      ],
+      "transliteration": "Spas",
+      "translations": {
+        "en": {
+          "name": "Spas (warm yogurt and wheat soup)",
+          "description": "Warm soup of matsun, hulled wheat and herbs."
+        },
+        "ru": {
+          "name": "Спас",
+          "description": "Тёплый суп из мацуна, пшеницы и зелени."
+        }
+      }
+    },
+    {
+      "id": "tjvjik",
+      "match": [
+        "Տժվժիկ",
+        "Тжвжик",
+        "tjvjik"
+      ],
+      "transliteration": "Tjvjik",
+      "translations": {
+        "en": {
+          "name": "Tjvjik (pan-fried liver with onions)",
+          "description": "Beef liver and offal fried with onions and spices."
+        },
+        "ru": {
+          "name": "Тжвжик",
+          "description": "Говяжья печень и субпродукты, жаренные с луком и специями."
+        }
+      }
+    },
+    {
+      "id": "kyufta",
+      "match": [
+        "Քյուֆթա",
+        "Кюфта",
+        "kyufta",
+        "kufta"
+      ],
+      "transliteration": "Kyufta",
+      "translations": {
+        "en": {
+          "name": "Kyufta (Armenian beef meatballs)",
+          "description": "Large, silky boiled meatballs of finely pounded beef, served sliced with butter."
+        },
+        "ru": {
+          "name": "Кюфта",
+          "description": "Крупные нежные отварные тефтели из отбитой говядины, подаются нарезанными со сливочным маслом."
+        }
+      }
+    },
+    {
+      "id": "lula-kebab",
+      "match": [
+        "Լյուլա քաբաբ",
+        "Լյուլյա քյաբաբ",
+        "Լյուլյա",
+        "Люля-кебаб",
+        "lula kebab"
+      ],
+      "transliteration": "Lula Kebab",
+      "translations": {
+        "en": {
+          "name": "Lula Kebab (minced meat skewer)",
+          "description": "Spiced minced meat grilled on a flat skewer."
+        },
+        "ru": {
+          "name": "Люля-кебаб",
+          "description": "Пряный мясной фарш, жаренный на шампуре."
+        }
+      }
+    },
+    {
+      "id": "lamb",
+      "kind": "ingredient",
+      "match": [
+        "Գառան միս",
+        "Գառան",
+        "Գառի"
+      ],
+      "translations": {
+        "en": {
+          "name": "lamb",
+          "description": "lamb meat"
+        },
+        "ru": {
+          "name": "баранина",
+          "description": "мясо ягнёнка"
+        }
+      }
+    },
+    {
+      "id": "beef",
+      "kind": "ingredient",
+      "match": [
+        "Տավարի միս",
+        "Տավարի"
+      ],
+      "translations": {
+        "en": {
+          "name": "beef",
+          "description": "beef"
+        },
+        "ru": {
+          "name": "говядина",
+          "description": "говядина"
+        }
+      }
+    },
+    {
+      "id": "pork",
+      "kind": "ingredient",
+      "match": [
+        "Խոզի միս",
+        "Խոզի"
+      ],
+      "translations": {
+        "en": {
+          "name": "pork",
+          "description": "pork"
+        },
+        "ru": {
+          "name": "свинина",
+          "description": "свинина"
+        }
+      }
+    },
+    {
+      "id": "chicken",
+      "kind": "ingredient",
+      "match": [
+        "Հավի միս",
+        "Հավի",
+        "Հավով"
+      ],
+      "translations": {
+        "en": {
+          "name": "chicken",
+          "description": "chicken"
+        },
+        "ru": {
+          "name": "курица",
+          "description": "курица"
+        }
+      }
+    },
+    {
+      "id": "fish",
+      "kind": "ingredient",
+      "match": [
+        "Ձուկ",
+        "Ձկան"
+      ],
+      "translations": {
+        "en": {
+          "name": "fish",
+          "description": "fish"
+        },
+        "ru": {
+          "name": "рыба",
+          "description": "рыба"
+        }
+      }
+    },
+    {
+      "id": "raisins",
+      "kind": "ingredient",
+      "match": [
+        "Չամիչ"
+      ],
+      "translations": {
+        "en": {
+          "name": "raisins",
+          "description": "raisins"
+        },
+        "ru": {
+          "name": "изюм",
+          "description": "изюм"
+        }
+      }
+    },
+    {
+      "id": "walnuts",
+      "kind": "ingredient",
+      "match": [
+        "Ընկույզ"
+      ],
+      "translations": {
+        "en": {
+          "name": "walnuts",
+          "description": "walnuts"
+        },
+        "ru": {
+          "name": "грецкие орехи",
+          "description": "грецкие орехи"
+        }
+      }
+    },
+    {
+      "id": "honey",
+      "kind": "ingredient",
+      "match": [
+        "Մեղր"
+      ],
+      "translations": {
+        "en": {
+          "name": "honey",
+          "description": "honey"
+        },
+        "ru": {
+          "name": "мёд",
+          "description": "мёд"
+        }
+      }
+    },
+    {
+      "id": "greens",
+      "kind": "ingredient",
+      "match": [
+        "Կանաչի"
+      ],
+      "translations": {
+        "en": {
+          "name": "fresh herbs and greens",
+          "description": "fresh herbs and greens"
+        },
+        "ru": {
+          "name": "зелень",
+          "description": "свежая зелень"
+        }
+      }
+    },
+    {
+      "id": "pumpkin",
+      "kind": "ingredient",
+      "match": [
+        "Դդում"
+      ],
+      "translations": {
+        "en": {
+          "name": "pumpkin",
+          "description": "pumpkin"
+        },
+        "ru": {
+          "name": "тыква",
+          "description": "тыква"
+        }
+      }
+    },
+    {
+      "id": "air-dried",
+      "kind": "ingredient",
+      "match": [
+        "Չորացրած"
+      ],
+      "translations": {
+        "en": {
+          "name": "air-dried",
+          "description": "air-dried"
+        },
+        "ru": {
+          "name": "вяленый",
+          "description": "вяленый"
+        }
+      }
+    },
+    {
+      "id": "garlic",
+      "kind": "ingredient",
+      "match": [
+        "Սխտոր"
+      ],
+      "translations": {
+        "en": {
+          "name": "garlic",
+          "description": "garlic"
+        },
+        "ru": {
+          "name": "чеснок",
+          "description": "чеснок"
+        }
+      }
+    },
+    {
+      "id": "rice",
+      "kind": "ingredient",
+      "match": [
+        "Բրինձ"
+      ],
+      "translations": {
+        "en": {
+          "name": "rice",
+          "description": "rice"
+        },
+        "ru": {
+          "name": "рис",
+          "description": "рис"
+        }
+      }
+    },
+    {
+      "id": "onion",
+      "kind": "ingredient",
+      "match": [
+        "Սոխ"
+      ],
+      "translations": {
+        "en": {
+          "name": "onion",
+          "description": "onion"
+        },
+        "ru": {
+          "name": "лук",
+          "description": "лук"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "gemma3:12b": {
+    "read_vision": {
+      "dishes_found": "11/11",
+      "name_accuracy": 85.5,
+      "prices_right": "11/11",
+      "seconds": 53.3
+    },
+    "read_ocr": {
+      "dishes_found": "11/11",
+      "name_accuracy": 94.0,
+      "prices_right": "11/11",
+      "seconds": 78.8
+    },
+    "generic": {
+      "names_right": "7/11",
+      "false_vegetarian": 0,
+      "seconds": 81.8,
+      "sample": [
+        "Pork Kebab",
+        "Hashlama",
+        "Manti",
+        "Ghapama"
+      ]
+    },
+    "hyur": {
+      "names_right": "11/11",
+      "false_vegetarian": 0,
+      "seconds": 98.0,
+      "sample": [
+        "Khorovats (Armenian barbecue) with Pork Rib Chops",
+        "Khashlama (braised lamb with vegetables)",
+        "Armenian Manti (baked mini dumplings)",
+        "Ghapama (stuffed baked pumpkin)"
+      ]
+    }
+  },
+  "qwen2.5vl:7b": {
+    "read_vision": {
+      "dishes_found": "11/11",
+      "name_accuracy": 44.0,
+      "prices_right": "11/11",
+      "seconds": 67.0
+    },
+    "read_ocr": {
+      "dishes_found": "11/11",
+      "name_accuracy": 94.0,
+      "prices_right": "11/11",
+      "seconds": 48.9
+    },
+    "generic": {
+      "names_right": "7/11",
+      "false_vegetarian": 0,
+      "seconds": 25.8,
+      "sample": [
+        "Khorovats with Pork",
+        "Khachlama",
+        "Manti",
+        "Qapama"
+      ]
+    },
+    "hyur": {
+      "names_right": "11/11",
+      "false_vegetarian": 0,
+      "seconds": 45.8,
+      "sample": [
+        "Khorovats — Pork Rib Chops, Beans, Flatbread",
+        "Khashlama — Braised Lamb with Vegetables",
+        "Armenian Manti — Meat Balls with Yogurt",
+        "Ghapama — Stuffed Baked Pumpkin"
+      ]
+    }
+  },
+  "qwen2.5:7b": {
+    "read_vision": {
+      "error": "Ollama returned 400: {\"error\":\"{\\\"error\\\":{\\\"code\\\":400,\\\"message\\\":\\\"Multimodal data provided, but model does not suppo"
+    },
+    "read_ocr": {
+      "dishes_found": "19/11",
+      "name_accuracy": 94.0,
+      "prices_right": "11/11",
+      "seconds": 54.3
+    },
+    "generic": {
+      "names_right": "8/11",
+      "false_vegetarian": 0,
+      "seconds": 33.7,
+      "sample": [
+        "Khorovas Khosi",
+        "Khashlama",
+        "Manti",
+        "Ghapama"
+      ]
+    },
+    "hyur": {
+      "names_right": "10/11",
+      "false_vegetarian": 0,
+      "seconds": 40.4,
+      "sample": [
+        "Khorovats (Armenian barbecue)",
+        "Khashlama (braised lamb with vegetables)",
+        "Manti (baked mini dumplings)",
+        "Ghapama (stuffed baked pumpkin)"
+      ]
+    }
+  }
+}

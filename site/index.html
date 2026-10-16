@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyur — Menu Translator</title>
+  <meta name="description" content="Menu translation that knows your dishes. Runs on a restaurant's own laptop with open-weight models.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&family=Noto+Sans+Armenian:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f0e6; --paper: #fffbf4; --ink: #2a1d17; --muted: #7a6a5f; --line: #e6d9c6;
+      --accent: #a3361f; --accent-ink: #fff; --ok: #3f7d4e; --bad: #b3261e; --chip: #efe3d1;
+      --serif: "Fraunces", Georgia, "Noto Sans Armenian", serif;
+      --sans: "Inter", "Noto Sans Armenian", system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1b1512; --paper: #251d19; --ink: #f1e7da; --muted: #b3a291; --line: #3d322b;
+        --accent: #e0714f; --accent-ink: #1b1512; --ok: #7cc28d; --bad: #f2867c; --chip: #33281f;
+      }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); }
+    a { color: var(--accent); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+    h1, h2, h3 { font-family: var(--serif); line-height: 1.15; margin: 0; }
+    section { padding: 56px 0; border-top: 1px solid var(--line); }
+    .eyebrow { color: var(--accent); font: 600 13px var(--sans); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+    h2 { font-size: clamp(26px, 4vw, 36px); margin-bottom: 14px; }
+    .lead { color: var(--muted); max-width: 680px; font-size: 18px; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+    .brand { display: flex; gap: 10px; align-items: center; font: 700 22px var(--serif); text-decoration: none; color: var(--ink); }
+    .logo { width: 36px; height: 36px; border-radius: 10px; background: var(--accent); color: var(--accent-ink);
+      display: grid; place-items: center; font: 600 21px "Noto Sans Armenian", sans-serif; }
+    .btn { display: inline-block; padding: 11px 18px; border-radius: 10px; background: var(--accent); color: var(--accent-ink);
+      text-decoration: none; font-weight: 600; }
+    .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+
+    .hero { padding: 48px 0 64px; border-top: none; }
+    .hero h1 { font-size: clamp(36px, 6.5vw, 64px); max-width: 820px; }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero .lead { margin: 18px 0 26px; }
+    .hero .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 26px; }
+    .pill { background: var(--chip); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--muted); }
+
+    .fails { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 24px; }
+    .fail { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+    .fail .src { font: 600 20px "Noto Sans Armenian", var(--serif); }
+    .fail .bad { color: var(--bad); text-decoration: line-through; margin-top: 6px; }
+    .fail .good { color: var(--ok); font-weight: 600; }
+    .fail small { color: var(--muted); display: block; margin-top: 6px; }
+
+    .demo { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 20px; margin-top: 26px; align-items: start; }
+    @media (max-width: 820px) { .demo { grid-template-columns: 1fr; } }
+    .photo { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 12px; position: sticky; top: 12px; }
+    .photo img { width: 100%; border-radius: 8px; display: block; }
+    .photo p { color: var(--muted); font-size: 13px; margin: 8px 4px 0; }
+    @media (max-width: 820px) { .photo { position: static; } }
+    .toolbar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
+    .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 12px; font: 500 13px var(--sans);
+      cursor: pointer; color: var(--ink); }
+    .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+    .chip.generic.on { background: var(--muted); border-color: var(--muted); }
+    .sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; }
+    .sheet { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 28px 30px; }
+    @media (max-width: 600px) { .sheet { padding: 20px 16px; } }
+    .sheet h3 { text-align: center; font-size: 26px; }
+    .sheet .sub { text-align: center; color: var(--muted); margin-bottom: 18px; font-family: "Noto Sans Armenian", var(--sans); }
+    .sec h4 { font: 600 12px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+      border-bottom: 1px solid var(--line); padding-bottom: 6px; margin: 18px 0 8px; }
+    .sec h4 small { color: var(--muted); letter-spacing: 0; text-transform: none; font-weight: 400; margin-left: 6px; }
+    .dish { padding: 8px 0; }
+    .dish + .dish { border-top: 1px dotted var(--line); }
+    .dh { display: flex; justify-content: space-between; gap: 12px; }
+    .dn { font: 600 16px var(--serif); }
+    .ds { color: var(--muted); font-size: 13px; font-family: "Noto Sans Armenian", var(--sans); }
+    .dp { font-weight: 600; white-space: nowrap; }
+    .dd { font-size: 15px; margin-top: 2px; }
+    .dm { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; font-size: 12px; }
+    .tag { background: var(--chip); border-radius: 999px; padding: 0 8px; color: var(--muted); }
+    .tag.g { color: var(--ok); background: transparent; padding: 0; }
+    .tag.warn { color: var(--bad); background: transparent; padding: 0; }
+    .note { color: var(--muted); font-size: 13px; margin-top: 10px; }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 24px; counter-reset: s; }
+    .step { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+    .step::before { counter-increment: s; content: counter(s); display: inline-grid; place-items: center; width: 26px; height: 26px;
+      border-radius: 50%; background: var(--chip); color: var(--accent); font-weight: 600; font-size: 13px; margin-bottom: 8px; }
+    .step h3 { font-size: 18px; margin-bottom: 4px; }
+    .step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .tablewrap { overflow-x: auto; margin-top: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 640px; }
+    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+    th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+    tr:last-child td { border-bottom: none; }
+    td.num { font-variant-numeric: tabular-nums; }
+    .best { color: var(--ok); font-weight: 600; }
+    .worst { color: var(--bad); }
+
+    .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 24px; }
+    .why div { border-left: 3px solid var(--accent); padding-left: 14px; }
+    .why h3 { font-size: 18px; margin-bottom: 4px; }
+    .why p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    pre { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; overflow-x: auto; font-size: 14px; }
+    footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#"><span class="logo">հ</span>Hyur</a>
+      <a class="btn ghost" href="https://github.com/ErikDallaqyan/hacktoberfest-project">GitHub</a>
+    </nav>
+
+    <header class="hero">
+      <div class="eyebrow">Menu translator for family restaurants</div>
+      <h1>Your menu, in your guests' language, <em>with your dishes named right.</em></h1>
+      <p class="lead">Hyur (հյուր, “guest”) turns a phone photo of a menu into a printable bilingual menu.
+        It learns your dishes from a house glossary you correct once, and it runs entirely on your own laptop with open models:
+        no subscription, no per-menu cost, nothing uploaded.</p>
+      <div class="row">
+        <a class="btn" href="#demo">See it on a sample menu</a>
+        <a class="btn ghost" href="#run">Run it on your laptop</a>
+      </div>
+      <div class="pills">
+        <span class="pill">Gemma 3 via Ollama</span><span class="pill">Tesseract OCR</span>
+        <span class="pill">Works offline</span><span class="pill">$0 per menu</span><span class="pill">MIT licensed</span>
+      </div>
+    </header>
+
+    <section>
+      <div class="eyebrow">The problem</div>
+      <h2>Generic translation doesn't know Armenian food.</h2>
+      <p class="lead">Tourists in Yerevan read menus like these every day. A general-purpose model gets the words, not the dishes.</p>
+      <div class="fails">
+        <div class="fail"><div class="src">Ճաշացանկ · Տոլմա · Խաշլամա</div><div class="bad">“Georgian menu: სასათქმელი…”</div>
+          <div class="good">Armenian, read correctly by Tesseract</div><small>Qwen2.5-VL 7B and Qwen3-VL 8B both decided the Armenian script was Georgian and invented every dish.</small></div>
+        <div class="fail"><div class="src">Խորոված խոզի</div><div class="bad">“Pork Kebab”</div>
+          <div class="good">Khorovats (Armenian barbecue) with Pork Rib Chops</div><small>Gemma 3 12B without the glossary drops the dish's real name.</small></div>
+        <div class="fail"><div class="src">Խաշլամա</div><div class="bad">“Hashlama”</div>
+          <div class="good">Khashlama (braised lamb with vegetables)</div><small>Wrong transliteration, and nothing tells a guest what it is.</small></div>
+        <div class="fail"><div class="src">Տոլմա · աղացած միս, մածուն</div><div class="bad">“pickled cabbage, brine” · vegetarian</div>
+          <div class="good">minced meat, rice, herbs, matsun · contains meat</div><small>Qwen2.5 7B. Hyur's dietary guard is code, not a prompt.</small></div>
+      </div>
+    </section>
+
+    <section id="demo">
+      <div class="eyebrow">Live result</div>
+      <h2>One photo in, a bilingual menu out.</h2>
+      <p class="lead">This is the actual output of the pipeline on a sample menu, generated locally on a 16 GB MacBook.
+        Toggle <b>Generic</b> to see the same model without the house glossary.</p>
+      <div class="demo">
+        <div class="photo">
+          <img src="img/sample_menu_hy.png" alt="Sample Armenian-language restaurant menu">
+          <p id="readNote">Sample menu (Armenian).</p>
+        </div>
+        <div>
+          <div class="toolbar" id="langs"></div>
+          <article class="sheet" id="sheet"><p class="note">Loading…</p></article>
+          <p class="note" id="sheetNote"></p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">How it works</div>
+      <h2>Small open models, each doing one job well.</h2>
+      <div class="steps">
+        <div class="step"><h3>Read</h3><p>Tesseract OCR reads the photo in under a second, with a real Armenian model. Gemma 3 structures it into sections, dishes and prices.</p></div>
+        <div class="step"><h3>Fix</h3><p>OCR letter swaps in dish names (Մանքի → Մանթի) snap to your glossary's spelling. You review every line before translating.</p></div>
+        <div class="step"><h3>Ground</h3><p>Each dish is matched to your house glossary, even when Armenian suffixes change the word, and the rules go right under that dish in the prompt.</p></div>
+        <div class="step"><h3>Translate</h3><p>Gemma 3 translates. Prices and order never pass through the model, and a dish that mentions meat can never be labelled vegetarian.</p></div>
+        <div class="step"><h3>Learn</h3><p>Correct a dish once and it's saved to your glossary, per language. The next menu gets it right automatically.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="eyebrow">What I measured</div>
+      <h2>The glossary matters more than the model.</h2>
+      <p class="lead">Scored on the sample menu (11 dishes). Reading = how close the dish names come out to the printed text.
+        Translation = English dish names a guest would recognise (e.g. “Khorovats … pork”, not “Pork Kebab”).</p>
+      <div class="tablewrap"><table id="evalTable"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
+      <p class="note" id="evalNote"></p>
+    </section>
+
+    <section>
+      <div class="eyebrow">Why open models</div>
+      <h2>Why this only works as an open, local tool.</h2>
+      <div class="why">
+        <div><h3>$0 per menu</h3><p>Restaurants reprint menus every time a price changes. With no per-call bill, “translate it again” is never a decision.</p></div>
+        <div><h3>The glossary is the product</h3><p>Swap in a better open model next year and keep every correction. No lock-in to anyone's pricing or deprecations.</p></div>
+        <div><h3>Offline and private</h3><p>A back-office laptop with patchy Wi-Fi is enough. Menus, prices and supplier notes stay on it.</p></div>
+        <div><h3>Inspectable</h3><p>Running models locally let me find that two popular vision models read Armenian as Georgian, and design around it.</p></div>
+      </div>
+    </section>
+
+    <section id="run">
+      <div class="eyebrow">Try it</div>
+      <h2>Run it on your laptop.</h2>
+      <pre>brew install tesseract ollama
+ollama pull gemma3:12b
+git clone https://github.com/ErikDallaqyan/hacktoberfest-project hyur && cd hyur
+scripts/get_tessdata.sh hye rus eng
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/uvicorn app.main:app --port 8000   # open http://localhost:8000</pre>
+      <p class="note">8 GB machine? Use <code>gemma3:4b</code>. Any Ollama model can be picked in the app.</p>
+    </section>
+
+    <footer>
+      Built for Hacktoberfest 2026 · Side Hustle. Open source under MIT.
+      <a href="https://github.com/ErikDallaqyan/hacktoberfest-project">Source on GitHub</a>
+    </footer>
+  </div>
+
+  <script>
+    const LANG = { en: "English", ru: "Russian", fr: "French" };
+    const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    let data, view = "en";
+
+    function render() {
+      const generic = view === "generic";
+      const t = generic ? data.generic.en : data.translations[view];
+      document.querySelectorAll("#langs .chip").forEach(b => b.classList.toggle("on", b.dataset.v === view));
+      const cur = t.currency ? ` ${esc(t.currency)}` : "";
+      document.getElementById("sheet").innerHTML = `
+        <h3>${esc(t.title)}</h3><div class="sub">${esc(t.source_title)}</div>
+        ${t.sections.map(s => `
+          <div class="sec"><h4>${esc(s.name)}<small>${esc(s.source_name)}</small></h4>
+          ${s.items.map(it => `
+            <div class="dish">
+              <div class="dh"><div><div class="dn">${esc(it.name)}</div><div class="ds">${esc(it.source_name)}</div></div>
+              <div class="dp">${esc(it.price)}${cur}</div></div>
+              <div class="dd">${esc(it.description)}</div>
+              <div class="dm">${it.dietary.map(d => `<span class="tag">${esc(d)}</span>`).join("")}
+                ${!generic && it.glossary_hits.length ? `<span class="tag g">✓ glossary: ${esc(it.glossary_hits.join(", "))}</span>` : ""}</div>
+            </div>`).join("")}
+          </div>`).join("")}`;
+      const st = generic ? null : data.stats[view];
+      document.getElementById("sheetNote").textContent = generic
+        ? "Same model, same menu, no house glossary and no dietary guard."
+        : `${data.model} · ${st.seconds}s · ${(st.prompt_tokens + st.output_tokens).toLocaleString()} tokens · API cost $0.00`;
+    }
+
+    function renderEval(ev) {
+      const rows = Object.entries(ev);
+      const cell = (o, k) => o && !o.error ? esc(o[k]) : "—";
+      document.querySelector("#evalTable").innerHTML = `
+        <thead><tr><th>Model</th><th>Read: vision only</th><th>Read: Tesseract + model</th>
+          <th>Dish names right · generic</th><th>Dish names right · Hyur</th></tr></thead>
+        <tbody>${rows.map(([m, r]) => `<tr>
+          <td><b>${esc(m)}</b></td>
+          <td class="num">${r.read_vision?.error ? '<span class="worst">no vision</span>' : `${cell(r.read_vision, "name_accuracy")}% · ${cell(r.read_vision, "seconds")}s`}</td>
+          <td class="num">${cell(r.read_ocr, "name_accuracy")}% · ${cell(r.read_ocr, "seconds")}s</td>
+          <td class="num">${cell(r.generic, "names_right")}</td>
+          <td class="num best">${cell(r.hyur, "names_right")}</td>
+        </tr>`).join("")}</tbody>`;
+      document.getElementById("evalNote").textContent =
+        "Apple M5, 16 GB, Ollama. Raw numbers: data/eval.json. Run scripts/eval.py to reproduce.";
+    }
+
+    fetch("data/sample.json").then(r => r.json()).then(d => {
+      data = d;
+      const bar = document.getElementById("langs");
+      bar.innerHTML = Object.keys(d.translations).map(l => `<button class="chip" data-v="${l}">${LANG[l] || l}</button>`).join("")
+        + `<span class="sep"></span><button class="chip generic" data-v="generic">Generic (no glossary)</button>`;
+      bar.addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) { view = b.dataset.v; render(); } });
+      const fixes = d.menu.sections.flatMap(s => s.items).filter(i => i.ocr_name).length;
+      const owner = (d.review_fixes || []).length;
+      document.getElementById("readNote").textContent =
+        `Read in ${d.read.seconds}s (OCR ${d.read.ocr_seconds ?? "–"}s) · ${fixes} OCR misread${fixes === 1 ? "" : "s"} fixed automatically from the glossary` +
+        (owner ? ` · ${owner} line fixed by the owner in the review step` : "") + ".";
+      render();
+    }).catch(() => document.getElementById("sheet").innerHTML = '<p class="note">Sample data not built yet.</p>');
+    fetch("data/eval.json").then(r => r.json()).then(renderEval).catch(() => {});
+  </script>
+</body>
+</html>
