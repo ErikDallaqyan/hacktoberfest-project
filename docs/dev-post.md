@@ -95,10 +95,13 @@ What surprised me:
   menu in an afternoon, find the Georgian misread, and swap in Tesseract for the step it does best. With a
   closed API I would have seen one model's output and never known why it was wrong.
 
-## First user
+## What's next
 
-<!-- TODO: who tried it (owner/manager of a café?), what happened, would they pay, what they asked for next.
-Ideas to ask: QR-code menu page, more languages (Farsi/Chinese for tour groups), allergen icons. -->
+So far I've tested Hyur on a sample Armenian menu, not on a restaurant's own photos. Next up:
+
+- **Real menus:** phone photos of real menus, with glare, handwriting and two-column layouts.
+- **A QR-code page:** so guests can read the menu in their own language on their phone.
+- **More starter glossaries:** for example Georgian and Persian dishes.
 
 ## How I built it
 
