@@ -21,16 +21,24 @@ The insight that shaped the whole build: **the fix isn't a bigger model, it's th
 Hyur keeps a *house glossary* of how each dish should be named and explained. The model has to follow it, and
 every correction the owner makes is saved back to the glossary, so the menu gets better every time they use it.
 
-🔗 **Live showcase:** <!-- TODO: https://<your-domain>.tech -->
+🔗 **Live showcase:** https://erikdallaqyan.github.io/hacktoberfest-project/
 💻 **Code (MIT):** https://github.com/ErikDallaqyan/hacktoberfest-project
 
 ## Demo
 
-<!-- TODO: upload docs/img/*.png here -->
+![Hyur home: your menu, in every guest's language](https://raw.githubusercontent.com/ErikDallaqyan/hacktoberfest-project/main/docs/img/01-home.jpg)
 
-![Reading the menu and fixing OCR misreads](docs/img/01-review.jpg)
-![Bilingual menu with glossary hits and dietary tags](docs/img/02-result.jpg)
-![Correct a dish once, saved to the house glossary](docs/img/03-correct.jpg)
+**1. Read and review.** The owner checks what was read; lines fixed automatically from the glossary are marked in green.
+
+![Review step with auto-corrected dish names highlighted](https://raw.githubusercontent.com/ErikDallaqyan/hacktoberfest-project/main/docs/img/02-review.jpg)
+
+**2. The bilingual menu.** Each dish keeps its real name, the original Armenian, a description, dietary tags and the glossary entries it used. "Correct" saves the owner's wording for next time.
+
+![Translated two-column menu with prices and glossary hits](https://raw.githubusercontent.com/ErikDallaqyan/hacktoberfest-project/main/docs/img/03-result.jpg)
+
+**3. Why it works.** Same model, with and without the house glossary.
+
+![Generic vs house-glossary translation comparison](https://raw.githubusercontent.com/ErikDallaqyan/hacktoberfest-project/main/docs/img/04-glossary.jpg)
 
 ## How it works
 
@@ -95,8 +103,9 @@ Ideas to ask: QR-code menu page, more languages (Farsi/Chinese for tour groups),
 ## How I built it
 
 Python + FastAPI, vanilla JS, Ollama (Gemma 3 12B), Tesseract 5 (`hye` model), RapidFuzz, on an Apple M5
-MacBook with 16 GB of memory. The showcase site is static and deployed with GitHub Pages. I built it pair-programming with
-Claude Code. <!-- TODO: DevRelay / Entire session link -->
+MacBook with 16 GB of memory. It ships as two Docker images: an nginx frontend and a FastAPI + Tesseract backend
+that talks to Ollama on the host (Docker on a Mac can't use the Apple GPU). The showcase site is static and
+deployed with GitHub Pages. I built it pair-programming with Claude Code.
 
 Run it yourself:
 
@@ -107,4 +116,11 @@ git clone https://github.com/ErikDallaqyan/hacktoberfest-project hyur && cd hyur
 scripts/get_tessdata.sh hye rus eng
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/uvicorn app.main:app --port 8000
+```
+
+Or with Docker (Ollama still runs on your machine):
+
+```bash
+ollama pull gemma3:12b
+docker compose up --build     # open http://localhost:8000
 ```
