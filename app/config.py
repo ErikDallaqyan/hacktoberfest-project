@@ -5,6 +5,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.getenv("HYUR_DATA_DIR", ROOT / "data"))
 GLOSSARY_DIR = DATA_DIR / "glossaries"
 MENU_DIR = DATA_DIR / "menus"
+FRONTEND_DIR = Path(os.getenv("HYUR_FRONTEND_DIR", ROOT / "frontend"))
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 VISION_MODEL = os.getenv("HYUR_VISION_MODEL", "gemma3:12b")

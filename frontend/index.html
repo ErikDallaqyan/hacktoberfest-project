@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hyur — Menu Translator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Inter:wght@400;500;600&family=Noto+Sans+Armenian:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav no-print">
+    <div class="wrap nav-inner">
+      <a class="logo" href="#top"><span>Hyur</span><small>հյուր</small></a>
+      <nav class="links">
+        <a href="#steps">How it works</a>
+        <a href="#glossary">Glossary</a>
+        <a href="https://github.com/ErikDallaqyan/hacktoberfest-project" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+      <div class="row nav-right">
+        <span class="pill" id="privacy" title="Everything runs on this computer"><i class="dot"></i><span id="engine">Local</span></span>
+        <button class="btn btn-sm" id="topSample">Try the sample</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero no-print" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker">Menu translator for family restaurants</p>
+        <h1>Your menu, in every <em>guest's</em> language</h1>
+        <p class="lead">Photograph your menu and get a printable bilingual one, with your dishes named the way
+          <em>you</em> name them. Open models on your own laptop: no subscription, nothing uploaded.</p>
+        <div class="row">
+          <a class="btn" href="#steps">Translate a menu</a>
+          <a class="btn btn-ghost" href="#glossary">Why it gets dishes right</a>
+        </div>
+        <ul class="facts">
+          <li><b>$0</b> per menu</li>
+          <li><b>12</b> languages</li>
+          <li><b>0</b> uploads</li>
+        </ul>
+      </div>
+
+      <figure class="preview" aria-label="Example of a translated menu">
+        <div class="preview-card">
+          <div class="preview-head">
+            <span class="arm">Ճաշացանկ</span>
+            <i class="sep">✦</i>
+            <span>Menu</span>
+          </div>
+          <div class="p-dish">
+            <div class="p-row"><b>Khorovats</b><span class="leader"></span><span class="price">4200 AMD</span></div>
+            <div class="arm small muted">Խորոված խոզի</div>
+            <div class="small">Armenian barbecue · pork rib chops, onion, lavash</div>
+          </div>
+          <div class="p-dish">
+            <div class="p-row"><b>Tolma</b><span class="leader"></span><span class="price">2800 AMD</span></div>
+            <div class="arm small muted">Տոլմա խաղողի տերևով</div>
+            <div class="small">Grape leaves, minced meat, rice, herbs, matsun</div>
+          </div>
+          <div class="p-dish">
+            <div class="p-row"><b>Ghapama</b><span class="leader"></span><span class="price">5500 AMD</span></div>
+            <div class="arm small muted">Ղափամա</div>
+            <div class="small">Pumpkin baked with rice, raisins and honey <span class="tag">vegetarian</span></div>
+          </div>
+        </div>
+        <figcaption class="sticker">
+          <s>Pork Kebab</s>
+          <span>→ Khorovats</span>
+          <small>saved in your glossary</small>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <main>
+    <section class="section no-print" id="steps">
+      <div class="wrap">
+        <div class="heading">
+          <p class="kicker">How it works</p>
+          <h2><em>Three steps to a bilingual menu</em></h2>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <header class="card-head">
+              <span class="num">1</span>
+              <div>
+                <h3>Your restaurant</h3>
+                <p class="card-sub">Set once. Your glossary teaches Hyur your dishes.</p>
+              </div>
+            </header>
+            <div class="fields">
+              <label>House glossary
+                <div class="row nowrap">
+                  <select id="glossary"></select>
+                  <button class="btn btn-ghost btn-sm" id="newGlossary" title="Create a glossary for your restaurant">+ New</button>
+                </div>
+              </label>
+              <label>Menu is written in
+                <select id="sourceLang"></select>
+              </label>
+              <div class="two">
+                <label>Model
+                  <select id="model"></select>
+                </label>
+                <label>Read photos with
+                  <select id="reader">
+                    <option value="auto">OCR + model</option>
+                    <option value="vision">Model vision</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card-head">
+              <span class="num">2</span>
+              <div>
+                <h3>The menu</h3>
+                <p class="card-sub">A phone photo is enough. Or paste the text.</p>
+              </div>
+            </header>
+            <div class="tabs">
+              <button class="tab active" data-tab="photo">Photo</button>
+              <button class="tab" data-tab="text">Paste text</button>
+            </div>
+            <div class="tabpane" data-pane="photo">
+              <label class="drop" id="drop">
+                <input type="file" id="file" accept="image/*" hidden>
+                <img id="preview" alt="Your menu photo" hidden>
+                <span class="drop-hint" id="dropHint">
+                  <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><rect x="10" y="6" width="28" height="36" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 15h16M16 21h12M16 27h16M16 33h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  <span>Drop a menu photo</span>
+                  <small>or click to choose one</small>
+                </span>
+              </label>
+              <button class="link" id="useSample">No menu handy? Use the sample Armenian menu</button>
+            </div>
+            <div class="tabpane" data-pane="text" hidden>
+              <textarea id="menuText" rows="9" placeholder="Paste the menu exactly as written…"></textarea>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card-head">
+              <span class="num">3</span>
+              <div>
+                <h3>Your guests</h3>
+                <p class="card-sub">Pick the languages they read.</p>
+              </div>
+            </header>
+            <div id="targetLangs" class="chips"></div>
+          </article>
+        </div>
+
+        <div class="center">
+          <button class="btn btn-lg" id="extractBtn">Read the menu</button>
+          <p class="status" id="extractStatus"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt no-print" id="review" hidden>
+      <div class="wrap">
+        <div class="heading">
+          <p class="kicker">Check what we read</p>
+          <h2><em>Anything misread?</em></h2>
+          <p class="muted">Fix names or prices before translating. Lines corrected automatically from your glossary are marked <span class="fixed-key">in green</span>.</p>
+        </div>
+        <div class="review" id="sourceMenu"></div>
+        <div class="center">
+          <button class="btn btn-lg" id="translateBtn">Translate</button>
+          <p class="status" id="translateStatus"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results" hidden>
+      <div class="wrap">
+        <div class="heading no-print">
+          <p class="kicker">Your new menu</p>
+          <h2><em>Ready for your guests</em></h2>
+        </div>
+        <div class="results-bar no-print">
+          <div class="chips" id="langTabs"></div>
+          <div class="row">
+            <button class="btn btn-ghost btn-sm" id="printBtn">Print bilingual menu</button>
+            <button class="btn btn-ghost btn-sm" id="jsonBtn">Download JSON</button>
+          </div>
+        </div>
+        <article class="sheet" id="sheet"></article>
+        <p class="stats no-print" id="stats"></p>
+      </div>
+    </section>
+
+    <section class="section section-alt no-print" id="glossary">
+      <div class="wrap">
+        <div class="heading">
+          <p class="kicker">Why it gets dishes right</p>
+          <h2><em>Your house glossary</em></h2>
+        </div>
+        <div class="gloss-grid">
+          <article class="card feature-text">
+            <h3 class="script">Correct it once</h3>
+            <p>Hyur keeps a glossary of how <b>your</b> dishes are named and explained. The model has to follow it,
+              and when you fix a dish, your wording wins on every future menu.</p>
+            <ul class="ticks">
+              <li>Click <b>Correct</b> on any dish to save your wording</li>
+              <li>Prices and dish order never pass through the model</li>
+              <li>Meat is never tagged “vegetarian”; pork is checked in code</li>
+            </ul>
+            <p class="muted small" id="glossaryCount"></p>
+            <button class="btn btn-ghost" id="browseGlossary">Browse glossary</button>
+          </article>
+
+          <article class="card compare">
+            <h3>Same model, with and without the glossary</h3>
+            <p class="muted small">Gemma 3 12B on a sample Armenian menu.</p>
+            <div class="cmp-row cmp-head"><span>On the menu</span><span>Generic</span><span>With Hyur</span></div>
+            <div class="cmp-row"><span class="arm">Խորոված խոզի</span><s>Pork Kebab</s><b>Khorovats (Armenian barbecue) with pork rib chops</b></div>
+            <div class="cmp-row"><span class="arm">Խաշլամա</span><s>Hashlama</s><b>Khashlama (braised lamb with vegetables)</b></div>
+            <div class="cmp-row"><span class="arm">Տոլմա</span><s>Grape Leaf Dolma</s><b>Tolma (stuffed grape leaves)</b></div>
+            <div class="cmp-row"><span class="arm">Բաստուրմա</span><s>Basturma · contains pork</s><b>Basturma (spiced cured beef)</b></div>
+            <div class="score">
+              <div><b>7/11</b><span>dishes named right, generic</span></div>
+              <div><b class="hl">11/11</b><span>with the house glossary</span></div>
+            </div>
+          </article>
+        </div>
+        <div class="glossary-list" id="glossaryList" hidden>
+          <input id="glossarySearch" placeholder="Search dishes…" aria-label="Search glossary">
+          <div id="glossaryRows"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer no-print">
+    <div class="wrap footer-inner">
+      <div>
+        <a class="logo" href="#top"><span>Hyur</span><small>հյուր</small></a>
+        <p class="muted small">Photos, menus and glossaries stay on this computer.<br>No account, no upload, no per-menu fee.</p>
+      </div>
+      <div class="footer-links">
+        <span class="muted small">Built on open models</span>
+        <a href="https://ai.google.dev/gemma" target="_blank" rel="noopener">Gemma 3</a>
+        <a href="https://github.com/tesseract-ocr/tesseract" target="_blank" rel="noopener">Tesseract</a>
+        <a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a>
+        <a href="https://github.com/ErikDallaqyan/hacktoberfest-project" target="_blank" rel="noopener">Source (MIT)</a>
+      </div>
+    </div>
+  </footer>
+
+  <template id="dishTpl">
+    <div class="dish">
+      <div class="dish-head">
+        <span class="dish-name"></span>
+        <span class="leader" aria-hidden="true"></span>
+        <span class="dish-price"></span>
+      </div>
+      <div class="dish-src"></div>
+      <div class="dish-desc"></div>
+      <div class="dish-meta">
+        <span class="tags"></span>
+        <span class="gloss no-print"></span>
+        <button class="link edit no-print">Correct</button>
+      </div>
+      <form class="dish-edit no-print" hidden>
+        <input name="name" placeholder="Dish name for guests" aria-label="Dish name for guests">
+        <textarea name="description" rows="2" placeholder="Short description" aria-label="Short description"></textarea>
+        <div class="row">
+          <button class="btn btn-sm" type="submit">Save to house glossary</button>
+          <button class="btn btn-ghost btn-sm cancel" type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

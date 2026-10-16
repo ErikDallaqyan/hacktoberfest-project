@@ -12,6 +12,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# API only: the UI ships in its own image (docker/frontend.Dockerfile).
 COPY app ./app
 COPY data/glossaries ./data/glossaries
 COPY samples ./samples
@@ -27,6 +28,6 @@ VOLUME /data
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/meta', timeout=4)"
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=4)"
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,15 +1,31 @@
-# Default: Hyur in a container, using the Ollama already running on your machine
+# Two images: hyur-frontend (nginx + UI) and hyur-backend (FastAPI + Tesseract).
+#
+# Default: the backend uses the Ollama already running on your machine
 # (on a Mac this keeps Apple-GPU acceleration, which Docker can't provide):
-#   docker compose up --build
+#   docker compose up --build          # open http://localhost:8000
 #
 # Fully containerised, e.g. on a Linux server (add a GPU reservation there if you have one):
 #   OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up --build
 services:
-  hyur:
-    build: .
-    image: hyur:latest
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    image: hyur-frontend:latest
     ports:
-      - "8000:8000"
+      - "${HYUR_PORT:-8000}:8080"
+    environment:
+      BACKEND_URL: http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    image: hyur-backend:latest
     environment:
       OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
       HYUR_VISION_MODEL: ${HYUR_MODEL:-gemma3:12b}
