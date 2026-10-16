@@ -13,21 +13,14 @@ from pydantic import BaseModel
 from . import config, glossary, ocr, pipeline
 from .ollama_client import OllamaError, list_models
 
-STATIC = config.ROOT / "app" / "static"
 MAX_IMAGE_SIDE = 1600
 
 app = FastAPI(title="Hyur — local menu translator")
-app.mount("/static", StaticFiles(directory=STATIC), name="static")
 
 
 @app.exception_handler(OllamaError)
 async def ollama_error(_, exc: OllamaError):
     return JSONResponse(status_code=502, content={"detail": str(exc)})
-
-
-@app.get("/")
-def index():
-    return FileResponse(STATIC / "index.html")
 
 
 @app.get("/api/meta")
@@ -138,3 +131,14 @@ def add_correction(glossary_id: str, c: Correction):
 @app.get("/api/sample")
 def sample_menu():
     return FileResponse(config.ROOT / "samples" / "sample_menu_hy.png")
+
+
+@app.get("/api/health")
+def health():
+    return {"ok": True}
+
+
+# Local development: serve the frontend from the same process. In Docker the frontend is its own
+# nginx image and the backend image doesn't contain it, so this mount is skipped there.
+if config.FRONTEND_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=config.FRONTEND_DIR, html=True), name="frontend")

@@ -56,10 +56,39 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/uvicorn app.main:app --port 8000
 ```
 
-Open http://localhost:8000, click **Use the sample Armenian menu**, then **Read menu** → **Translate**.
+Open http://localhost:8000, click **Try the sample menu**, then **Read the menu** → **Translate**.
+In development the backend also serves `frontend/`, so one process is enough.
 
 Any Ollama model works; pick it in the UI or set `HYUR_VISION_MODEL` / `HYUR_TEXT_MODEL`.
 Smaller machines can use `gemma3:4b`.
+
+### With Docker
+
+Two images:
+
+| Image | What's inside |
+|---|---|
+| `hyur-frontend` | nginx serving the UI (`frontend/`), proxying `/api/*` to the backend |
+| `hyur-backend` | FastAPI API + Tesseract with the best Armenian and Russian models |
+
+Models still come from Ollama:
+
+```bash
+ollama pull gemma3:12b          # on your machine
+docker compose up --build       # open http://localhost:8000
+```
+
+By default the backend talks to the Ollama on your machine (`host.docker.internal:11434`). On a Mac that's
+deliberate: Docker can't use the Apple GPU, so a containerised Ollama would run Gemma on the CPU only.
+On a Linux server you can run everything in containers:
+
+```bash
+OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up --build
+```
+
+Menus and glossaries are kept in the `hyur-data` volume. The starter glossary is copied in on first start,
+and your corrections are never overwritten. Settings: `HYUR_MODEL` (e.g. `gemma3:4b`), `HYUR_PORT`
+(default 8000), and `BACKEND_URL` on the frontend if the API runs elsewhere.
 
 ## Evaluate
 

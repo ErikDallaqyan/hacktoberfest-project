@@ -1,0 +1,15 @@
+.git
+.github
+.claude
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.DS_Store
+data/menus
+data/tessdata
+docs
+site
+tests
+scripts
+docker-compose.yml

@@ -5,6 +5,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.getenv("HYUR_DATA_DIR", ROOT / "data"))
 GLOSSARY_DIR = DATA_DIR / "glossaries"
 MENU_DIR = DATA_DIR / "menus"
+FRONTEND_DIR = Path(os.getenv("HYUR_FRONTEND_DIR", ROOT / "frontend"))
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 VISION_MODEL = os.getenv("HYUR_VISION_MODEL", "gemma3:12b")
@@ -26,5 +27,14 @@ LANGUAGES = {
     "ka": "Georgian",
 }
 
+STARTER_GLOSSARY_DIR = ROOT / "data" / "glossaries"
+
 for d in (GLOSSARY_DIR, MENU_DIR):
     d.mkdir(parents=True, exist_ok=True)
+
+# A fresh data dir (e.g. a Docker volume) gets the starter glossaries; existing ones are never overwritten.
+if GLOSSARY_DIR != STARTER_GLOSSARY_DIR:
+    for starter in STARTER_GLOSSARY_DIR.glob("*.json"):
+        target = GLOSSARY_DIR / starter.name
+        if not target.exists():
+            target.write_bytes(starter.read_bytes())

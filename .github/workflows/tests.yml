@@ -12,3 +12,17 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt pytest
       - run: python -m pytest -q
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build
+      - name: Frontend serves the UI and proxies the API; backend has Armenian OCR
+        run: |
+          docker compose up -d
+          for i in $(seq 1 30); do curl -fs localhost:8000/api/meta && break; sleep 2; done
+          curl -fs localhost:8000/ | grep -q "<title>Hyur"
+          curl -fs localhost:8000/api/meta | python3 -c "import sys, json; assert 'hy' in json.load(sys.stdin)['ocr_languages']"
+      - if: failure()
+        run: docker compose logs

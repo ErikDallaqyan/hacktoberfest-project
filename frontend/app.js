@@ -36,11 +36,15 @@ async function loadMeta() {
 
   const opts = models.length ? models : [vision_model];
   $("#model").innerHTML = opts.map(m => `<option ${m === vision_model ? "selected" : ""}>${esc(m)}</option>`).join("");
-  if (!models.length) {
-    $("#privacy").textContent = "● Ollama not reachable — start it with `ollama serve`";
-    $("#privacy").style.color = "var(--accent)";
+  if (models.length) {
+    $("#engine").textContent = `Local · ${vision_model}`;
+  } else {
+    $("#privacy").classList.add("offline");
+    $("#engine").textContent = "Ollama offline";
+    $("#privacy").title = "Start Ollama with: ollama serve";
   }
   renderGlossaries(glossaries);
+  updateGlossaryCount();
 }
 
 function renderGlossaries(list, selected) {
@@ -65,6 +69,7 @@ $("#newGlossary").addEventListener("click", async () => {
       body: JSON.stringify({ name, copy_from: $("#glossary").value }),
     });
     renderGlossaries(await api("/api/glossaries"), id);
+    updateGlossaryCount();
   } catch (err) { alert(err.message); }
 });
 
@@ -90,10 +95,16 @@ drop.addEventListener("drop", e => {
   e.preventDefault(); drop.classList.remove("over");
   if (e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);
 });
-$("#useSample").addEventListener("click", async () => {
+async function useSample() {
   const blob = await (await fetch("/api/sample")).blob();
   setFile(new File([blob], "sample_menu_hy.png", { type: "image/png" }));
   $("#sourceLang").value = "hy";
+  $$(".tab").find(t => t.dataset.tab === "photo").click();
+}
+$("#useSample").addEventListener("click", useSample);
+$("#topSample").addEventListener("click", async () => {
+  await useSample();
+  $("#steps").scrollIntoView({ behavior: "smooth" });
 });
 
 function ticker(el, label) {
@@ -198,12 +209,14 @@ function renderResults() {
   const cur = t.currency ? ` ${esc(t.currency)}` : "";
   const sheet = $("#sheet");
   sheet.innerHTML = `
-    <div class="sheet-title"><h3>${esc(t.title)}</h3><div>${esc(t.source_title)}</div></div>
+    <div class="sheet-title"><h3>${esc(t.title)}</h3><div>${esc(t.source_title)}</div><div class="ornament">✦</div></div>
+    <div class="sheet-body">
     ${t.sections.map((s, si) => `
       <div class="sheet-section">
         <h4>${esc(s.name)}<small>${esc(s.source_name)}</small></h4>
         <div class="dishes" data-s="${si}"></div>
-      </div>`).join("")}`;
+      </div>`).join("")}
+    </div>`;
 
   t.sections.forEach((s, si) => {
     const holder = $(`.dishes[data-s="${si}"]`, sheet);
@@ -214,7 +227,7 @@ function renderResults() {
       $(".dish-price", node).textContent = it.price ? `${it.price}${cur}` : "";
       $(".dish-desc", node).textContent = it.description;
       $(".tags", node).innerHTML = it.dietary.map(d => `<span class="tag">${esc(d)}</span>`).join(" ");
-      $(".gloss", node).textContent = it.glossary_hits.length ? `✓ house glossary: ${it.glossary_hits.join(", ")}` : "";
+      $(".gloss", node).textContent = it.glossary_hits.length ? `✓ glossary: ${it.glossary_hits.join(", ")}` : "";
       if (it.needs_review) $(".tags", node).insertAdjacentHTML("afterbegin", '<span class="tag warn">⚠ not translated, please correct</span>');
       wireEdit(node, it);
       holder.appendChild(node);
@@ -260,6 +273,8 @@ function wireEdit(node, it) {
       node.classList.add("saved");
       const list = await api("/api/glossaries");
       renderGlossaries(list, $("#glossary").value);
+      updateGlossaryCount();
+      if (!$("#glossaryList").hidden) loadGlossaryRows();
     } catch (err) { alert(err.message); }
   });
 }
@@ -271,4 +286,48 @@ $("#jsonBtn").addEventListener("click", () => {
   a.click();
 });
 
-loadMeta().catch(err => { $("#privacy").textContent = err.message; });
+// ---------- glossary browser ----------
+let glossaryEntries = [];
+
+function updateGlossaryCount() {
+  const opt = $("#glossary").selectedOptions[0];
+  $("#glossaryCount").textContent = opt ? `Using “${opt.textContent}”.` : "";
+}
+
+async function loadGlossaryRows() {
+  const g = await api(`/api/glossaries/${encodeURIComponent($("#glossary").value)}`);
+  glossaryEntries = g.entries || [];
+  renderGlossaryRows();
+}
+
+function renderGlossaryRows() {
+  const q = $("#glossarySearch").value.trim().toLowerCase();
+  const rows = glossaryEntries.filter(e => !q || JSON.stringify(e).toLowerCase().includes(q));
+  $("#glossaryRows").innerHTML = rows.map(e => {
+    const en = e.translations?.en || {};
+    const owner = Object.values(e.translations || {}).some(t => t.owner);
+    return `<div class="g-row">
+      <span class="arm">${esc(e.match?.[0])}</span>
+      <span>${esc(en.name)}<br><span class="muted small">${esc(en.description)}</span></span>
+      <span class="kind ${owner ? "owner" : ""}">${owner ? "✓ your wording" : esc(e.kind || "dish")}</span>
+    </div>`;
+  }).join("") || '<p class="muted small">No matches.</p>';
+}
+
+$("#browseGlossary").addEventListener("click", async () => {
+  const list = $("#glossaryList");
+  list.hidden = !list.hidden;
+  $("#browseGlossary").textContent = list.hidden ? "Browse glossary" : "Hide glossary";
+  if (!list.hidden) await loadGlossaryRows();
+});
+$("#glossarySearch").addEventListener("input", renderGlossaryRows);
+$("#glossary").addEventListener("change", () => {
+  updateGlossaryCount();
+  if (!$("#glossaryList").hidden) loadGlossaryRows();
+});
+
+loadMeta().catch(err => {
+  $("#privacy").classList.add("offline");
+  $("#engine").textContent = "Backend offline";
+  $("#privacy").title = err.message;
+});
