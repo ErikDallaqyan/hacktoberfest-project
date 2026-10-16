@@ -12,3 +12,14 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt pytest
       - run: python -m pytest -q
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t hyur:ci .
+      - name: Container starts and has Armenian OCR
+        run: |
+          docker run -d --name hyur -p 8000:8000 hyur:ci
+          for i in $(seq 1 20); do curl -fs localhost:8000/api/meta && break; sleep 2; done
+          curl -fs localhost:8000/api/meta | python3 -c "import sys, json; assert 'hy' in json.load(sys.stdin)['ocr_languages']"

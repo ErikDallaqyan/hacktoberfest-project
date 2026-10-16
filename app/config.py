@@ -26,5 +26,14 @@ LANGUAGES = {
     "ka": "Georgian",
 }
 
+STARTER_GLOSSARY_DIR = ROOT / "data" / "glossaries"
+
 for d in (GLOSSARY_DIR, MENU_DIR):
     d.mkdir(parents=True, exist_ok=True)
+
+# A fresh data dir (e.g. a Docker volume) gets the starter glossaries; existing ones are never overwritten.
+if GLOSSARY_DIR != STARTER_GLOSSARY_DIR:
+    for starter in STARTER_GLOSSARY_DIR.glob("*.json"):
+        target = GLOSSARY_DIR / starter.name
+        if not target.exists():
+            target.write_bytes(starter.read_bytes())

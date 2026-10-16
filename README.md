@@ -61,6 +61,26 @@ Open http://localhost:8000, click **Use the sample Armenian menu**, then **Read 
 Any Ollama model works; pick it in the UI or set `HYUR_VISION_MODEL` / `HYUR_TEXT_MODEL`.
 Smaller machines can use `gemma3:4b`.
 
+### With Docker
+
+The image bundles the app and Tesseract with its Armenian and Russian models. Models still come from Ollama:
+
+```bash
+ollama pull gemma3:12b          # on your machine
+docker compose up --build       # open http://localhost:8000
+```
+
+By default the container talks to the Ollama on your machine (`host.docker.internal:11434`). On a Mac that's
+deliberate: Docker can't use the Apple GPU, so a containerised Ollama would run Gemma on the CPU only.
+On a Linux server you can run everything in containers:
+
+```bash
+OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up --build
+```
+
+Menus and glossaries are kept in the `hyur-data` volume. The starter glossary is copied in on first start,
+and your corrections are never overwritten. Pick a different model with `HYUR_MODEL=gemma3:4b`.
+
 ## Evaluate
 
 ```bash

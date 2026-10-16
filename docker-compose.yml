@@ -1,0 +1,40 @@
+# Default: Hyur in a container, using the Ollama already running on your machine
+# (on a Mac this keeps Apple-GPU acceleration, which Docker can't provide):
+#   docker compose up --build
+#
+# Fully containerised, e.g. on a Linux server (add a GPU reservation there if you have one):
+#   OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up --build
+services:
+  hyur:
+    build: .
+    image: hyur:latest
+    ports:
+      - "8000:8000"
+    environment:
+      OLLAMA_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      HYUR_VISION_MODEL: ${HYUR_MODEL:-gemma3:12b}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - hyur-data:/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:0.34.2
+    profiles: ["ollama"]
+    volumes:
+      - ollama-models:/root/.ollama
+    restart: unless-stopped
+
+  ollama-pull:
+    image: ollama/ollama:0.34.2
+    profiles: ["ollama"]
+    depends_on: [ollama]
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["sh", "-c", "sleep 3 && ollama pull ${HYUR_MODEL:-gemma3:12b}"]
+    restart: "no"
+
+volumes:
+  hyur-data:
+  ollama-models:
