@@ -1,0 +1,920 @@
+{
+  "model": "gemma3:12b",
+  "read": {
+    "model": "gemma3:12b",
+    "seconds": 95.4,
+    "prompt_tokens": 463,
+    "output_tokens": 716,
+    "reader": "tesseract+llm",
+    "ocr_seconds": 0.3
+  },
+  "menu": {
+    "title": "Ճաշացանկ",
+    "currency": "դր.",
+    "sections": [
+      {
+        "name": "ՆԱԽՈՒՏԵՍՏ",
+        "items": [
+          {
+            "name": "Տոլմա խաղողի տերնով",
+            "description": "Աղացած միս, բրինձ, կանաչի, մածուն",
+            "price": "2800",
+            "id": "d1"
+          },
+          {
+            "name": "Բաստուրմա",
+            "description": "Ջորացրած տավարի միս չամանով",
+            "price": "3500",
+            "ocr_name": "Բ ատուրմո",
+            "id": "d2"
+          },
+          {
+            "name": "Ժինգյալով հաց",
+            "description": "Լավաշ 20 տեսակ կանաչիով",
+            "price": "1500",
+            "id": "d3"
+          }
+        ]
+      },
+      {
+        "name": "ՏԱՔ ՈՒՏԵՍՏՆԵՐ",
+        "items": [
+          {
+            "name": "Խորոված խոզի",
+            "description": "Խոզի չալաղաջ, սոխ, լավաշ",
+            "price": "4200",
+            "id": "d4"
+          },
+          {
+            "name": "Խաշլամա",
+            "description": "Գառան միս բանջարեղենով",
+            "price": "4800",
+            "id": "d5"
+          },
+          {
+            "name": "Մանթի",
+            "description": "Խմորով գնդիկներ մսով, մածուն",
+            "price": "3200",
+            "ocr_name": "Մանքի",
+            "id": "d6"
+          },
+          {
+            "name": "Ղափամա",
+            "description": "Դդում բրնձով, չամիչով ե մեղրով",
+            "price": "5500",
+            "id": "d7"
+          }
+        ]
+      },
+      {
+        "name": "ԱՂԱՆԴԵՐ",
+        "items": [
+          {
+            "name": "Գաթա",
+            "description": "Քաղցը խմորեղեն խորիզով",
+            "price": "1200",
+            "ocr_name": "Գաքա",
+            "id": "d8"
+          },
+          {
+            "name": "Փախլավա",
+            "description": "Ընկույզ, մեղը",
+            "price": "1400",
+            "id": "d9"
+          }
+        ]
+      },
+      {
+        "name": "ԸՄՊԵԼԻՔՆԵՐ",
+        "items": [
+          {
+            "name": "Թան",
+            "description": "Մածունով զովացուցիչ ըմպելիք",
+            "price": "600",
+            "id": "d10"
+          },
+          {
+            "name": "Հայկական սուրճ",
+            "description": "",
+            "price": "700",
+            "id": "d11"
+          }
+        ]
+      }
+    ]
+  },
+  "translations": {
+    "en": {
+      "title": "Menu",
+      "source_title": "Ճաշացանկ",
+      "currency": "AMD",
+      "target_lang": "en",
+      "sections": [
+        {
+          "source_name": "ՆԱԽՈՒՏԵՍՏ",
+          "name": "Appetizers",
+          "items": [
+            {
+              "id": "d1",
+              "source_name": "Տոլմա խաղողի տերնով",
+              "source_description": "Աղացած միս, բրինձ, կանաչի, մածուն",
+              "price": "2800",
+              "name": "Tolma (stuffed grape leaves)",
+              "description": "Ground meat, rice, fresh herbs and greens, matsun (Armenian yogurt).",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "tolma",
+                "matsun",
+                "greens",
+                "rice"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d2",
+              "source_name": "Բաստուրմա",
+              "source_description": "Ջորացրած տավարի միս չամանով",
+              "price": "3500",
+              "name": "Basturma (spiced cured beef)",
+              "description": "Cured beef with chaman (fenugreek spice paste).",
+              "dietary": [],
+              "glossary_hits": [
+                "basturma",
+                "beef",
+                "chaman"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d3",
+              "source_name": "Ժինգյալով հաց",
+              "source_description": "Լավաշ 20 տեսակ կանաչիով",
+              "price": "1500",
+              "name": "Zhingyalov Hats (herb-stuffed flatbread)",
+              "description": "Lavash (Armenian flatbread) with fresh herbs and greens.",
+              "dietary": [
+                "vegetarian"
+              ],
+              "glossary_hits": [
+                "zhingyalov-hats",
+                "greens",
+                "lavash"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ՏԱՔ ՈՒՏԵՍՏՆԵՐ",
+          "name": "Main Courses",
+          "items": [
+            {
+              "id": "d4",
+              "source_name": "Խորոված խոզի",
+              "source_description": "Խոզի չալաղաջ, սոխ, լավաշ",
+              "price": "4200",
+              "name": "Khorovats (Armenian barbecue) with Pork Rib Chops",
+              "description": "Pork rib chops, onion, lavash (Armenian flatbread).",
+              "dietary": [
+                "contains-pork"
+              ],
+              "glossary_hits": [
+                "khorovats",
+                "pork",
+                "chalaghaj",
+                "lavash",
+                "onion"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d5",
+              "source_name": "Խաշլամա",
+              "source_description": "Գառան միս բանջարեղենով",
+              "price": "4800",
+              "name": "Khashlama (braised lamb with vegetables)",
+              "description": "Lamb with vegetables.",
+              "dietary": [],
+              "glossary_hits": [
+                "khashlama",
+                "lamb"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d6",
+              "source_name": "Մանթի",
+              "source_description": "Խմորով գնդիկներ մսով, մածուն",
+              "price": "3200",
+              "name": "Armenian Manti (baked mini dumplings)",
+              "description": "Dough balls with meat, matsun (Armenian yogurt).",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "manti",
+                "matsun"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d7",
+              "source_name": "Ղափամա",
+              "source_description": "Դդում բրնձով, չամիչով ե մեղրով",
+              "price": "5500",
+              "name": "Ghapama (stuffed baked pumpkin)",
+              "description": "Pumpkin with rice, raisins, and honey.",
+              "dietary": [
+                "vegetarian"
+              ],
+              "glossary_hits": [
+                "ghapama",
+                "raisins",
+                "pumpkin",
+                "honey"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԱՂԱՆԴԵՐ",
+          "name": "Desserts",
+          "items": [
+            {
+              "id": "d8",
+              "source_name": "Գաթա",
+              "source_description": "Քաղցը խմորեղեն խորիզով",
+              "price": "1200",
+              "name": "Gata (Armenian sweet bread)",
+              "description": "Sweet bread with khoriz (butter-sugar filling).",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "gata",
+                "khoriz"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d9",
+              "source_name": "Փախլավա",
+              "source_description": "Ընկույզ, մեղը",
+              "price": "1400",
+              "name": "Pakhlava (Armenian baklava)",
+              "description": "Walnuts, honey.",
+              "dietary": [
+                "contains-nuts",
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "pakhlava",
+                "walnuts"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԸՄՊԵԼԻՔՆԵՐ",
+          "name": "Beverages",
+          "items": [
+            {
+              "id": "d10",
+              "source_name": "Թան",
+              "source_description": "Մածունով զովացուցիչ ըմպելիք",
+              "price": "600",
+              "name": "Tan (salted yogurt drink)",
+              "description": "Refreshing drink with matsun (Armenian yogurt).",
+              "dietary": [
+                "vegetarian",
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "tan",
+                "matsun"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d11",
+              "source_name": "Հայկական սուրճ",
+              "source_description": "",
+              "price": "700",
+              "name": "Armenian Coffee",
+              "description": "Finely ground coffee brewed in a jazzve, served unfiltered.",
+              "dietary": [],
+              "glossary_hits": [
+                "armenian-coffee"
+              ],
+              "needs_review": false
+            }
+          ]
+        }
+      ]
+    },
+    "ru": {
+      "title": "Меню",
+      "source_title": "Ճաշացանկ",
+      "currency": "AMD",
+      "target_lang": "ru",
+      "sections": [
+        {
+          "source_name": "ՆԱԽՈՒՏԵՍՏ",
+          "name": "Закуски",
+          "items": [
+            {
+              "id": "d1",
+              "source_name": "Տոլմա խաղողի տերնով",
+              "source_description": "Աղացած միս, բրինձ, կանաչի, մածուն",
+              "price": "2800",
+              "name": "Толма в виноградных листьях",
+              "description": "Измельченное мясо, рис, зелень, мацун.",
+              "dietary": [],
+              "glossary_hits": [
+                "tolma",
+                "matsun",
+                "greens",
+                "rice"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d2",
+              "source_name": "Բաստուրմա",
+              "source_description": "Ջորացրած տավարի միս չամանով",
+              "price": "3500",
+              "name": "Бастурма",
+              "description": "Соленая говядина с чаманом (пажитником).",
+              "dietary": [],
+              "glossary_hits": [
+                "basturma",
+                "beef",
+                "chaman"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d3",
+              "source_name": "Ժինգյալով հաց",
+              "source_description": "Լավաշ 20 տեսակ կանաչիով",
+              "price": "1500",
+              "name": "Жингялов хац",
+              "description": "Лаваш с 20 видами зелени.",
+              "dietary": [],
+              "glossary_hits": [
+                "zhingyalov-hats",
+                "greens",
+                "lavash"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ՏԱՔ ՈՒՏԵՍՏՆԵՐ",
+          "name": "Мясные блюда",
+          "items": [
+            {
+              "id": "d4",
+              "source_name": "Խորոված խոզի",
+              "source_description": "Խոզի չալաղաջ, սոխ, լավաշ",
+              "price": "4200",
+              "name": "Хоровац из свинины",
+              "description": "Свиные ребрышки чалагач, лук, лаваш.",
+              "dietary": [
+                "contains-pork"
+              ],
+              "glossary_hits": [
+                "khorovats",
+                "pork",
+                "chalaghaj",
+                "lavash",
+                "onion"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d5",
+              "source_name": "Խաշլամա",
+              "source_description": "Գառան միս բանջարեղենով",
+              "price": "4800",
+              "name": "Хашлама",
+              "description": "Баранина с овощами.",
+              "dietary": [],
+              "glossary_hits": [
+                "khashlama",
+                "lamb"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d6",
+              "source_name": "Մանթի",
+              "source_description": "Խմորով գնդիկներ մսով, մածուն",
+              "price": "3200",
+              "name": "Армянские манты",
+              "description": "Тестовые шарики с мясом, мацун.",
+              "dietary": [],
+              "glossary_hits": [
+                "manti",
+                "matsun"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d7",
+              "source_name": "Ղափամա",
+              "source_description": "Դդում բրնձով, չամիչով ե մեղրով",
+              "price": "5500",
+              "name": "Гапама",
+              "description": "Тыква с рисом, изюмом и медом.",
+              "dietary": [],
+              "glossary_hits": [
+                "ghapama",
+                "raisins",
+                "pumpkin",
+                "honey"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԱՂԱՆԴԵՐ",
+          "name": "Сладости",
+          "items": [
+            {
+              "id": "d8",
+              "source_name": "Գաթա",
+              "source_description": "Քաղցը խմորեղեն խորիզով",
+              "price": "1200",
+              "name": "Гата",
+              "description": "Сладкая выпечка с хоризом (сладкой начинкой).",
+              "dietary": [],
+              "glossary_hits": [
+                "gata",
+                "khoriz"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d9",
+              "source_name": "Փախլավա",
+              "source_description": "Ընկույզ, մեղը",
+              "price": "1400",
+              "name": "Пахлава",
+              "description": "Грецкие орехи, мед.",
+              "dietary": [
+                "contains-nuts"
+              ],
+              "glossary_hits": [
+                "pakhlava",
+                "walnuts"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԸՄՊԵԼԻՔՆԵՐ",
+          "name": "Напитки",
+          "items": [
+            {
+              "id": "d10",
+              "source_name": "Թան",
+              "source_description": "Մածունով զովացուցիչ ըմպելիք",
+              "price": "600",
+              "name": "Тан",
+              "description": "Освежающий напиток с мацуном.",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "tan",
+                "matsun"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d11",
+              "source_name": "Հայկական սուրճ",
+              "source_description": "",
+              "price": "700",
+              "name": "Армянский кофе",
+              "description": "Кофе мелкого помола, сваренный в джезве, без фильтра.",
+              "dietary": [],
+              "glossary_hits": [
+                "armenian-coffee"
+              ],
+              "needs_review": false
+            }
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "title": "Carte",
+      "source_title": "Ճաշացանկ",
+      "currency": "AMD",
+      "target_lang": "fr",
+      "sections": [
+        {
+          "source_name": "ՆԱԽՈՒՏԵՍՏ",
+          "name": "Entrées",
+          "items": [
+            {
+              "id": "d1",
+              "source_name": "Տոլմա խաղողի տերնով",
+              "source_description": "Աղացած միս, բրինձ, կանաչի, մածուն",
+              "price": "2800",
+              "name": "Tolma aux feuilles de vigne",
+              "description": "Viande hachée, riz, herbes fraîches et yaourt.",
+              "dietary": [],
+              "glossary_hits": [
+                "tolma",
+                "matsun",
+                "greens",
+                "rice"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d2",
+              "source_name": "Բաստուրմա",
+              "source_description": "Ջորացրած տավարի միս չամանով",
+              "price": "3500",
+              "name": "Basturma",
+              "description": "Bœuf séché et épicé avec une pâte de fenugrec.",
+              "dietary": [],
+              "glossary_hits": [
+                "basturma",
+                "beef",
+                "chaman"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d3",
+              "source_name": "Ժինգյալով հաց",
+              "source_description": "Լավաշ 20 տեսակ կանաչիով",
+              "price": "1500",
+              "name": "Pain aux herbes (Zhingyalov Hats)",
+              "description": "Pain plat lavash garni de 20 sortes d'herbes fraîches.",
+              "dietary": [],
+              "glossary_hits": [
+                "zhingyalov-hats",
+                "greens",
+                "lavash"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ՏԱՔ ՈՒՏԵՍՏՆԵՐ",
+          "name": "Plats Principaux",
+          "items": [
+            {
+              "id": "d4",
+              "source_name": "Խորոված խոզի",
+              "source_description": "Խոզի չալաղաջ, սոխ, լավաշ",
+              "price": "4200",
+              "name": "Khorovats au porc",
+              "description": "Côtes de porc, oignon et pain plat lavash.",
+              "dietary": [
+                "contains-pork"
+              ],
+              "glossary_hits": [
+                "khorovats",
+                "pork",
+                "chalaghaj",
+                "lavash",
+                "onion"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d5",
+              "source_name": "Խաշլամա",
+              "source_description": "Գառան միս բանջարեղենով",
+              "price": "4800",
+              "name": "Khashlama",
+              "description": "Agneau braisé aux légumes.",
+              "dietary": [],
+              "glossary_hits": [
+                "khashlama",
+                "lamb"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d6",
+              "source_name": "Մանթի",
+              "source_description": "Խմորով գնդիկներ մսով, մածուն",
+              "price": "3200",
+              "name": "Manti",
+              "description": "Mini-boulettes farcies à la viande, accompagnées de yaourt.",
+              "dietary": [],
+              "glossary_hits": [
+                "manti",
+                "matsun"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d7",
+              "source_name": "Ղափամա",
+              "source_description": "Դդում բրնձով, չամիչով ե մեղրով",
+              "price": "5500",
+              "name": "Ghapama",
+              "description": "Courge farcie au riz, aux raisins et au miel.",
+              "dietary": [],
+              "glossary_hits": [
+                "ghapama",
+                "raisins",
+                "pumpkin",
+                "honey"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԱՂԱՆԴԵՐ",
+          "name": "Desserts",
+          "items": [
+            {
+              "id": "d8",
+              "source_name": "Գաթա",
+              "source_description": "Քաղցը խմորեղեն խորիզով",
+              "price": "1200",
+              "name": "Gata",
+              "description": "Pâtisserie sucrée fourrée au beurre et au sucre.",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "gata",
+                "khoriz"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d9",
+              "source_name": "Փախլավա",
+              "source_description": "Ընկույզ, մեղը",
+              "price": "1400",
+              "name": "Pakhlava",
+              "description": "Baklava aux noix.",
+              "dietary": [
+                "contains-nuts"
+              ],
+              "glossary_hits": [
+                "pakhlava",
+                "walnuts"
+              ],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԸՄՊԵԼԻՔՆԵՐ",
+          "name": "Boissons",
+          "items": [
+            {
+              "id": "d10",
+              "source_name": "Թան",
+              "source_description": "Մածունով զովացուցիչ ըմպելիք",
+              "price": "600",
+              "name": "Tan",
+              "description": "Boisson rafraîchissante au yaourt salé.",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [
+                "tan",
+                "matsun"
+              ],
+              "needs_review": false
+            },
+            {
+              "id": "d11",
+              "source_name": "Հայկական սուրճ",
+              "source_description": "",
+              "price": "700",
+              "name": "Café arménien",
+              "description": "Café finement moulu, infusé dans une jazzve, servi non filtré.",
+              "dietary": [],
+              "glossary_hits": [
+                "armenian-coffee"
+              ],
+              "needs_review": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "generic": {
+    "en": {
+      "title": "Menu",
+      "source_title": "Ճաշացանկ",
+      "currency": "AMD",
+      "target_lang": "en",
+      "sections": [
+        {
+          "source_name": "ՆԱԽՈՒՏԵՍՏ",
+          "name": "Appetizers",
+          "items": [
+            {
+              "id": "d1",
+              "source_name": "Տոլմա խաղողի տերնով",
+              "source_description": "Աղացած միս, բրինձ, կանաչի, մածուն",
+              "price": "2800",
+              "name": "Grape Leaf Dolma",
+              "description": "Ground meat, rice, greens, yogurt.",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d2",
+              "source_name": "Բաստուրմա",
+              "source_description": "Ջորացրած տավարի միս չամանով",
+              "price": "3500",
+              "name": "Basturma",
+              "description": "Cured beef with salt.",
+              "dietary": [
+                "contains-pork"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d3",
+              "source_name": "Ժինգյալով հաց",
+              "source_description": "Լավաշ 20 տեսակ կանաչիով",
+              "price": "1500",
+              "name": "Lavash with Herbs",
+              "description": "Lavash with 20 types of greens.",
+              "dietary": [
+                "vegetarian"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ՏԱՔ ՈՒՏԵՍՏՆԵՐ",
+          "name": "Main Courses",
+          "items": [
+            {
+              "id": "d4",
+              "source_name": "Խորոված խոզի",
+              "source_description": "Խոզի չալաղաջ, սոխ, լավաշ",
+              "price": "4200",
+              "name": "Pork Kebab",
+              "description": "Pork tenderloin, onion, lavash.",
+              "dietary": [
+                "contains-pork"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d5",
+              "source_name": "Խաշլամա",
+              "source_description": "Գառան միս բանջարեղենով",
+              "price": "4800",
+              "name": "Hashlama",
+              "description": "Lamb with vegetables.",
+              "dietary": [],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d6",
+              "source_name": "Մանթի",
+              "source_description": "Խմորով գնդիկներ մսով, մածուն",
+              "price": "3200",
+              "name": "Manti",
+              "description": "Meat-filled dumplings, yogurt.",
+              "dietary": [],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d7",
+              "source_name": "Ղափամա",
+              "source_description": "Դդում բրնձով, չամիչով ե մեղրով",
+              "price": "5500",
+              "name": "Ghapama",
+              "description": "Pumpkin with rice, dried apricots, and honey.",
+              "dietary": [
+                "vegetarian"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԱՂԱՆԴԵՐ",
+          "name": "Desserts",
+          "items": [
+            {
+              "id": "d8",
+              "source_name": "Գաթա",
+              "source_description": "Քաղցը խմորեղեն խորիզով",
+              "price": "1200",
+              "name": "Gata",
+              "description": "Sweet pastry with khuriz.",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d9",
+              "source_name": "Փախլավա",
+              "source_description": "Ընկույզ, մեղը",
+              "price": "1400",
+              "name": "Pakhlava",
+              "description": "Walnuts, honey.",
+              "dietary": [
+                "contains-nuts",
+                "contains-dairy"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            }
+          ]
+        },
+        {
+          "source_name": "ԸՄՊԵԼԻՔՆԵՐ",
+          "name": "Beverages",
+          "items": [
+            {
+              "id": "d10",
+              "source_name": "Թան",
+              "source_description": "Մածունով զովացուցիչ ըմպելիք",
+              "price": "600",
+              "name": "Tan",
+              "description": "Refreshing drink with yogurt.",
+              "dietary": [
+                "contains-dairy"
+              ],
+              "glossary_hits": [],
+              "needs_review": false
+            },
+            {
+              "id": "d11",
+              "source_name": "Հայկական սուրճ",
+              "source_description": "",
+              "price": "700",
+              "name": "Armenian Coffee",
+              "description": "Traditional Armenian coffee.",
+              "dietary": [],
+              "glossary_hits": [],
+              "needs_review": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "stats": {
+    "en": {
+      "model": "gemma3:12b",
+      "seconds": 156.8,
+      "prompt_tokens": 1527,
+      "output_tokens": 834
+    },
+    "ru": {
+      "model": "gemma3:12b",
+      "seconds": 104.6,
+      "prompt_tokens": 1477,
+      "output_tokens": 732
+    },
+    "fr": {
+      "model": "gemma3:12b",
+      "seconds": 105.6,
+      "prompt_tokens": 1737,
+      "output_tokens": 753
+    }
+  },
+  "review_fixes": [
+    [
+      "Բայկականխարն",
+      "Հայկական սուրճ"
+    ]
+  ]
+}
