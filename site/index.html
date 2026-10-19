@@ -77,7 +77,8 @@
     .dh { display: flex; justify-content: space-between; gap: 12px; }
     .dn { font: 600 16px var(--serif); }
     .ds { color: var(--muted); font-size: 13px; font-family: "Noto Sans Armenian", var(--sans); }
-    .dp { font-weight: 600; white-space: nowrap; }
+    .dp { font-weight: 600; white-space: nowrap; text-align: right; }
+    .dp .usd { display: block; color: var(--muted); font-weight: 400; font-size: 12px; }
     .dd { font-size: 15px; margin-top: 2px; }
     .dm { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; font-size: 12px; }
     .tag { background: var(--chip); border-radius: 999px; padding: 0 8px; color: var(--muted); }
@@ -120,9 +121,9 @@
     <header class="hero">
       <div class="eyebrow">Menu translator for family restaurants</div>
       <h1>Your menu, in your guests' language, <em>with your dishes named right.</em></h1>
-      <p class="lead">Hyur (հյուր, “guest”) turns a phone photo of a menu into a printable bilingual menu.
-        It learns your dishes from a house glossary you correct once, and it runs entirely on your own laptop with open models:
-        no subscription, no per-menu cost, nothing uploaded.</p>
+      <p class="lead">Hyur (pronounced “hyoor”, Armenian for “guest”) turns a phone photo of a menu into a printable
+        bilingual menu. It learns a restaurant's dishes from a house glossary the owner corrects once, and it runs entirely
+        on the restaurant's own laptop with open models: no subscription, no per-menu cost, nothing uploaded.</p>
       <div class="row">
         <a class="btn" href="#demo">See it on a sample menu</a>
         <a class="btn ghost" href="#run">Run it on your laptop</a>
@@ -135,17 +136,20 @@
 
     <section>
       <div class="eyebrow">The problem</div>
-      <h2>Generic translation doesn't know Armenian food.</h2>
-      <p class="lead">Tourists in Yerevan read menus like these every day. A general-purpose model gets the words, not the dishes.</p>
+      <h2>Machine translation gets the words, not the dishes.</h2>
+      <p class="lead">Imagine a translator turning “buffalo wings” into “wings of a buffalo” or “sloppy joe” into “messy Joseph”.
+        That is what happens to Armenian menus every day, for travelers in Armenia and for the Armenian restaurants
+        in Glendale, Fresno and Watertown that want an English menu next to the Armenian one. Below is the sample menu
+        I tested on, and what open models did with it.</p>
       <div class="fails">
         <div class="fail"><div class="src">Ճաշացանկ · Տոլմա · Խաշլամա</div><div class="bad">“Georgian menu: სასათქმელი…”</div>
-          <div class="good">Armenian, read correctly by Tesseract</div><small>Qwen2.5-VL 7B and Qwen3-VL 8B both decided the Armenian script was Georgian and invented every dish.</small></div>
+          <div class="good">Armenian, read correctly by Tesseract</div><small>Armenian has its own 38-letter alphabet. Qwen2.5-VL 7B and Qwen3-VL 8B both decided it was Georgian (a different alphabet) and invented every dish.</small></div>
         <div class="fail"><div class="src">Խորոված խոզի</div><div class="bad">“Pork Kebab”</div>
-          <div class="good">Khorovats (Armenian barbecue) with Pork Rib Chops</div><small>Gemma 3 12B without the glossary drops the dish's real name.</small></div>
+          <div class="good">Khorovats (Armenian barbecue) with Pork Rib Chops</div><small>Khorovats is Armenia's national barbecue, like Texas brisket is to Texas. Gemma 3 12B without the glossary drops the name.</small></div>
         <div class="fail"><div class="src">Խաշլամա</div><div class="bad">“Hashlama”</div>
-          <div class="good">Khashlama (braised lamb with vegetables)</div><small>Wrong transliteration, and nothing tells a guest what it is.</small></div>
+          <div class="good">Khashlama (braised lamb with vegetables)</div><small>Misspelled, and nothing tells a guest what it actually is.</small></div>
         <div class="fail"><div class="src">Տոլմա · աղացած միս, մածուն</div><div class="bad">“pickled cabbage, brine” · vegetarian</div>
-          <div class="good">minced meat, rice, herbs, matsun · contains meat</div><small>Qwen2.5 7B. Hyur's dietary guard is code, not a prompt.</small></div>
+          <div class="good">ground meat, rice, herbs, matsun (yogurt) · contains meat</div><small>Tolma is stuffed grape leaves, the Armenian cousin of Greek dolmades. Qwen2.5 7B called it vegetarian. Hyur's dietary check is code, not a prompt.</small></div>
       </div>
     </section>
 
@@ -153,11 +157,12 @@
       <div class="eyebrow">Live result</div>
       <h2>One photo in, a bilingual menu out.</h2>
       <p class="lead">This is the actual output of the pipeline on a sample menu, generated locally on a 16 GB MacBook.
+        Prices are in Armenian dram (AMD), with an approximate US dollar price next to them.
         Toggle <b>Generic</b> to see the same model without the house glossary.</p>
       <div class="demo">
         <div class="photo">
           <img src="img/sample_menu_hy.png" alt="Sample Armenian-language restaurant menu">
-          <p id="readNote">Sample menu (Armenian).</p>
+          <p id="readNote">Sample menu, written in Armenian.</p>
         </div>
         <div>
           <div class="toolbar" id="langs"></div>
@@ -171,19 +176,20 @@
       <div class="eyebrow">How it works</div>
       <h2>Small open models, each doing one job well.</h2>
       <div class="steps">
-        <div class="step"><h3>Read</h3><p>Tesseract OCR reads the photo in under a second, with a real Armenian model. Gemma 3 structures it into sections, dishes and prices.</p></div>
-        <div class="step"><h3>Fix</h3><p>OCR letter swaps in dish names (Մանքի → Մանթի) snap to your glossary's spelling. You review every line before translating.</p></div>
-        <div class="step"><h3>Ground</h3><p>Each dish is matched to your house glossary, even when Armenian suffixes change the word, and the rules go right under that dish in the prompt.</p></div>
-        <div class="step"><h3>Translate</h3><p>Gemma 3 translates. Prices and order never pass through the model, and a dish that mentions meat can never be labelled vegetarian.</p></div>
-        <div class="step"><h3>Learn</h3><p>Correct a dish once and it's saved to your glossary, per language. The next menu gets it right automatically.</p></div>
+        <div class="step"><h3>Read</h3><p>Tesseract, an open-source OCR engine, reads the text off the photo in under a second. Gemma 3 sorts it into sections, dishes and prices.</p></div>
+        <div class="step"><h3>Fix</h3><p>When OCR swaps a letter in a dish name (think “Lasagma” for “Lasagna”), Hyur snaps it to the glossary's spelling. The owner reviews every line before translating.</p></div>
+        <div class="step"><h3>Ground</h3><p>Each dish is matched to the house glossary, even when Armenian grammar adds an ending to the word, and the matching rules go right under that dish in the prompt.</p></div>
+        <div class="step"><h3>Translate</h3><p>Gemma 3 translates. Prices and dish order never pass through the model, and a dish that mentions meat can never be labeled vegetarian.</p></div>
+        <div class="step"><h3>Learn</h3><p>Correct a dish once and it's saved to the glossary, per language. The next menu gets it right automatically.</p></div>
       </div>
     </section>
 
     <section>
       <div class="eyebrow">What I measured</div>
       <h2>The glossary matters more than the model.</h2>
-      <p class="lead">Scored on the sample menu (11 dishes). Reading = how close the dish names come out to the printed text.
-        Translation = English dish names a guest would recognise (e.g. “Khorovats … pork”, not “Pork Kebab”).</p>
+      <p class="lead">Scored on the sample menu (11 dishes). <b>Read</b> = how close the dish names come out to the printed text.
+        <b>Dish names right</b> = the English name keeps the real dish name a guest can ask for, the way a US menu says
+        “Pad Thai”, not “Thai fried noodles”. So “Khorovats … pork”, not “Pork Kebab”.</p>
       <div class="tablewrap"><table id="evalTable"><tbody><tr><td>Loading…</td></tr></tbody></table></div>
       <p class="note" id="evalNote"></p>
     </section>
@@ -192,9 +198,9 @@
       <div class="eyebrow">Why open models</div>
       <h2>Why this only works as an open, local tool.</h2>
       <div class="why">
-        <div><h3>$0 per menu</h3><p>Restaurants reprint menus every time a price changes. With no per-call bill, “translate it again” is never a decision.</p></div>
+        <div><h3>$0 per menu</h3><p>Restaurants reprint menus every time a price changes. With no per-call API bill, “translate it again” is never a decision.</p></div>
         <div><h3>The glossary is the product</h3><p>Swap in a better open model next year and keep every correction. No lock-in to anyone's pricing or deprecations.</p></div>
-        <div><h3>Offline and private</h3><p>A back-office laptop with patchy Wi-Fi is enough. Menus, prices and supplier notes stay on it.</p></div>
+        <div><h3>Offline and private</h3><p>The laptop in the back office is enough, even with spotty Wi-Fi. Menus, prices and supplier notes stay on it.</p></div>
         <div><h3>Inspectable</h3><p>Running models locally let me find that two popular vision models read Armenian as Georgian, and design around it.</p></div>
       </div>
     </section>
@@ -220,6 +226,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
   <script>
     const LANG = { en: "English", ru: "Russian", fr: "French" };
     const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const AMD_PER_USD = 390;  // approximate, for US readers
     let data, view = "en";
 
     function render() {
@@ -227,6 +234,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
       const t = generic ? data.generic.en : data.translations[view];
       document.querySelectorAll("#langs .chip").forEach(b => b.classList.toggle("on", b.dataset.v === view));
       const cur = t.currency ? ` ${esc(t.currency)}` : "";
+      const usd = p => t.currency === "AMD" && /^\d+$/.test(p) ? `<small class="usd">≈ $${Math.max(1, Math.round(p / AMD_PER_USD))}</small>` : "";
       document.getElementById("sheet").innerHTML = `
         <h3>${esc(t.title)}</h3><div class="sub">${esc(t.source_title)}</div>
         ${t.sections.map(s => `
@@ -234,7 +242,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
           ${s.items.map(it => `
             <div class="dish">
               <div class="dh"><div><div class="dn">${esc(it.name)}</div><div class="ds">${esc(it.source_name)}</div></div>
-              <div class="dp">${esc(it.price)}${cur}</div></div>
+              <div class="dp">${esc(it.price)}${cur}${usd(it.price)}</div></div>
               <div class="dd">${esc(it.description)}</div>
               <div class="dm">${it.dietary.map(d => `<span class="tag">${esc(d)}</span>`).join("")}
                 ${!generic && it.glossary_hits.length ? `<span class="tag g">✓ glossary: ${esc(it.glossary_hits.join(", "))}</span>` : ""}</div>
@@ -242,8 +250,8 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
           </div>`).join("")}`;
       const st = generic ? null : data.stats[view];
       document.getElementById("sheetNote").textContent = generic
-        ? "Same model, same menu, no house glossary and no dietary guard."
-        : `${data.model} · ${st.seconds}s · ${(st.prompt_tokens + st.output_tokens).toLocaleString()} tokens · API cost $0.00`;
+        ? "Same model, same menu, no house glossary and no dietary check."
+        : `${data.model} · ${st.seconds}s · ${(st.prompt_tokens + st.output_tokens).toLocaleString()} tokens · API cost $0.00 · dollar prices at ~${AMD_PER_USD} AMD per $1`;
     }
 
     function renderEval(ev) {

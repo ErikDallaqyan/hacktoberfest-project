@@ -41,7 +41,7 @@ menu photo ──► Tesseract OCR (hye) ──► Gemma 3 structures it ──�
 - **Glossary grounding**: only the entries that match a dish are injected, right under that dish, split into
   "this dish is X" and "mentions ingredient X".
 - **Prices and order never pass through the model's output** — translations are merged back by dish id.
-- **Dietary guard**: a dish whose text mentions meat can never be labelled vegetarian, and pork is always
+- **Dietary guard**: a dish whose text mentions meat can never be labeled vegetarian, and pork is always
   flagged, whatever the model says.
 
 ## Run it
