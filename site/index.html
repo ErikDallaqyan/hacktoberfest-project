@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sloth Sort</title>
+<meta name="description" content="A local, open-weight model renames the screenshots and PDFs piling up on your Desktop, so you don't have to.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f3ec; --panel: #fffdf8; --ink: #2b2a26; --muted: #6f6c62; --line: #e4ddce;
+  --moss: #4f6b3a; --moss-soft: #e5ecd9; --bark: #8a6a4a; --warn: #a4471f; --warn-soft: #f8e4d8;
+  --win: #fbfaf6; --win-bar: #ece7da;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1c18; --panel: #24251f; --ink: #ece8dc; --muted: #a19d90; --line: #36372f;
+    --moss: #a5c486; --moss-soft: #2f3a26; --bark: #c9a57e; --warn: #f0a07a; --warn-soft: #3d2a20;
+    --win: #20211c; --win-bar: #2c2d26;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1c18; --panel: #24251f; --ink: #ece8dc; --muted: #a19d90; --line: #36372f;
+  --moss: #a5c486; --moss-soft: #2f3a26; --bark: #c9a57e; --warn: #f0a07a; --warn-soft: #3d2a20;
+  --win: #20211c; --win-bar: #2c2d26;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Inter, -apple-system, "Segoe UI", sans-serif; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+h1, h2 { font-family: Fraunces, Georgia, serif; letter-spacing: -0.01em; line-height: 1.15; }
+h1 { font-size: clamp(38px, 6vw, 64px); margin: 0 0 14px; }
+h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 12px; }
+h3 { margin: 0 0 6px; font-size: 18px; }
+p { margin: 0 0 14px; }
+a { color: var(--moss); }
+code { font-family: var(--mono); font-size: .86em; background: var(--panel); border: 1px solid var(--line); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+.muted { color: var(--muted); }
+section { padding: 56px 0; }
+.lead { font-size: 20px; color: var(--muted); max-width: 720px; }
+
+/* hero */
+.hero { padding-top: 64px; padding-bottom: 28px; }
+.badge { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); padding: 5px 12px; border-radius: 99px; margin-bottom: 22px; }
+.sloth { font-size: 56px; line-height: 1; display: block; margin-bottom: 10px; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 15px Inter, sans-serif; padding: 11px 18px; border-radius: 11px; text-decoration: none; cursor: pointer; border: 1px solid var(--moss); background: var(--moss); color: var(--panel); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn:disabled { opacity: .6; cursor: default; }
+
+/* the desktop window */
+.window { background: var(--win); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -24px rgba(40, 35, 20, .35); }
+.bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--win-bar); border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 11px; height: 11px; border-radius: 50%; background: #e46b5d; }
+.dots i:nth-child(2) { background: #e9b949; } .dots i:nth-child(3) { background: #6cbf5b; }
+.bar .title { flex: 1; text-align: center; margin-right: 50px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 18px 14px; padding: 22px; }
+.file { text-align: center; font-size: 12.5px; position: relative; }
+.file .pic { width: 100%; aspect-ratio: 4/3; border-radius: 8px; border: 1px solid var(--line); background: var(--panel) center top / cover no-repeat; transition: transform .4s, box-shadow .4s; }
+.file .name { margin-top: 7px; font-family: var(--mono); font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; min-height: 2.7em; }
+.file .chip { display: inline-block; margin-top: 4px; font-size: 11px; padding: 1px 8px; border-radius: 99px; background: var(--moss-soft); color: var(--moss); opacity: 0; transition: opacity .4s; }
+.file.reading .pic { box-shadow: 0 0 0 3px var(--bark); transform: scale(1.03); }
+.file.reading .name::after { content: " · reading…"; color: var(--bark); font-family: Inter, sans-serif; }
+.file.done .name { color: var(--moss); font-weight: 600; }
+.file.done .chip { opacity: 1; }
+.file.kept .name { color: var(--ink); }
+.file .warn { position: absolute; top: 6px; right: 6px; font-size: 11px; background: var(--warn-soft); color: var(--warn); padding: 1px 7px; border-radius: 99px; opacity: 0; transition: opacity .4s; }
+.file.done .warn { opacity: 1; }
+.controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 22px; border-top: 1px solid var(--line); background: var(--win-bar); }
+.controls .status { font-size: 14px; color: var(--muted); }
+
+/* cards */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+.card .ico { font-size: 26px; display: block; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 15.5px; margin: 0; }
+
+/* table */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); margin-top: 22px; }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
+td.mono { font-family: var(--mono); font-size: 12.5px; overflow-wrap: anywhere; }
+#evaltable { min-width: 760px; }
+.ok { color: var(--moss); font-weight: 600; } .no { color: var(--warn); font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.stat b { display: block; font: 700 30px Fraunces, Georgia, serif; }
+.stat span { font-size: 14px; color: var(--muted); }
+
+.shot { width: 100%; border-radius: 14px; border: 1px solid var(--line); margin-top: 24px; display: block; }
+pre { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; overflow-x: auto; font: 14px/1.6 var(--mono); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: start; }
+ul.plain { padding-left: 20px; margin: 0; } ul.plain li { margin-bottom: 8px; }
+footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  section { padding: 40px 0; }
+  .cards, .two { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .grid { grid-template-columns: repeat(2, 1fr); padding: 14px; gap: 14px 10px; }
+  .bar .title { margin-right: 0; }
+  .lead { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="wrap hero">
+  <span class="badge">🎃 Hacktoberfest 2026 · Open-Source AI Challenge, Week 3: Slow and Steady</span>
+  <span class="sloth" aria-hidden="true">🦥</span>
+  <h1>Sloth Sort names your files<br>so you don't have to.</h1>
+  <p class="lead">Your Desktop is full of <code>Screenshot 2026-10-14 at 9.41.22 AM.png</code>. You'll rename them later. You won't. Sloth Sort uses Google's open-weight <b>Gemma 3</b>, running on your own laptop, to look at each file and give it a name a tidy person would have picked.</p>
+  <div class="cta">
+    <a class="btn" href="https://github.com/ErikDallaqyan/hacktoberfest-project">View on GitHub</a>
+    <a class="btn ghost" href="#run">Run it in 3 commands</a>
+  </div>
+</header>
+
+<section class="wrap" style="padding-top: 10px" aria-label="Demo">
+  <div class="window">
+    <div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="title">Desktop — <span id="count">11</span> items</span></div>
+    <div class="grid" id="grid"></div>
+    <div class="controls">
+      <span class="status" id="status">These are real names Gemma 3 4B produced for made-up files, replayed here.</span>
+      <button class="btn" id="go" type="button">🦥 Let the sloth do it</button>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>You do nothing. That's the feature.</h2>
+  <p class="lead">Sloth Sort sits in the background and moves at its own pace: one file at a time, about four seconds each, on a laptop.</p>
+  <div class="cards">
+    <div class="card"><span class="ico">👀</span><h3>It watches</h3><p>When a new screenshot, photo or PDF lands in <code>~/Desktop</code> or <code>~/Downloads</code>, it gets a real name within seconds. The model unloads itself when there's nothing to do.</p></div>
+    <div class="card"><span class="ico">🤚</span><h3>It knows what to leave alone</h3><p>Only throwaway names get touched: <code>Screenshot …</code>, <code>IMG_4821</code>, <code>download (2).pdf</code>, hashes. <code>taxes 2025 notes.pdf</code> stays as you named it.</p></div>
+    <div class="card"><span class="ico">↩️</span><h3>Every rename can be undone</h3><p>Each rename is written to a journal before the file moves. A local review page shows every change, with one-click undo or a retype box.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="two">
+    <div>
+      <h2>Why it has to be open and local</h2>
+      <p>Look at what's actually in a Downloads folder: bank statements, utility bills with your address, screenshots of private group chats, a settings page with your API keys still on it.</p>
+      <p>A cloud vision API would need every one of those uploaded just to come up with a filename. That's a bad trade for something you'd run on everything, all the time, without looking.</p>
+    </div>
+    <div>
+      <ul class="plain" style="margin-top: 8px">
+        <li><b>Nothing leaves the laptop.</b> Gemma 3 runs through Ollama. The review page only listens on <code>127.0.0.1</code>.</li>
+        <li><b>It costs $0 forever.</b> Renaming a few hundred files a month would mean a per-image API bill. Here it's electricity.</li>
+        <li><b>It works offline</b>, on a plane, which is exactly when you screenshot your boarding pass.</li>
+        <li><b>You pick the model.</b> I started on Gemma 3 12B. It made my 16 GB laptop lag, so I switched to 4B with one setting change. It's twice as fast and still gets every date right.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>The model suggests. Code decides.</h2>
+  <p class="lead">A small model is great at reading a boarding pass. It is not something to trust with your file system. Gemma only suggests words; plain Python decides what a filename may contain.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Rule</th><th>Why</th></tr>
+    <tr><td>Long digit runs, emails and phone numbers are scrubbed from every name</td><td class="muted">Filenames show up in Spotlight, cloud sync logs and email attachments. <code>chase-statement-7730-2219-5541.pdf</code> should never exist.</td></tr>
+    <tr><td>A date from the model is used only if a full day, month and year is printed on the file</td><td class="muted">Small models fill gaps. A cart that said "Thu, Oct 29" once became 2023-10-29, and "Q3 2026" once became July 1.</td></tr>
+    <tr><td>Never overwrite. A clash becomes <code>-2</code>, <code>-3</code></td><td class="muted">Your files are worth more than a pretty name.</td></tr>
+    <tr><td>Wait until a file stops growing</td><td class="muted">No renaming half-downloaded PDFs.</td></tr>
+    <tr><td>Flag passwords, keys and card numbers</td><td class="muted">The review page warns you, so a screenshot of your API keys doesn't sit on your Desktop forever.</td></tr>
+  </table></div>
+</section>
+
+<section class="wrap" id="eval">
+  <h2>How good are the names?</h2>
+  <p class="lead">I scored Gemma 3 4B on 11 made-up files: screenshots, a text PDF, an image-only phone scan, a chart, a meme and a page full of API keys. Each name is checked for the right words, category, date and secret flag. The misses are shown too.</p>
+  <div class="stats" id="stats"></div>
+  <div class="table-wrap"><table id="evaltable"><thead><tr><th>Before</th><th>After</th><th>Words</th><th>Category</th><th>Date</th><th>Secret flag</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section class="wrap">
+  <h2>The review page</h2>
+  <p class="lead">Runs on your machine at <code>127.0.0.1:8765</code>. Undo anything, retype anything, or tidy up the backlog of old files in one click.</p>
+  <img class="shot" src="img/review.png" alt="Sloth Sort review page listing renamed files with before and after names, categories and Undo buttons" loading="lazy">
+</section>
+
+<section class="wrap" id="run">
+  <h2>Run it</h2>
+  <p class="lead">You need macOS or Linux, Python 3.11+ and <a href="https://ollama.com">Ollama</a>.</p>
+<pre>ollama pull gemma3:4b
+pip install -r requirements.txt
+python -m slothsort          # then open http://127.0.0.1:8765</pre>
+  <p class="muted">Want to see what it would do first? <code>python -m slothsort scan ~/Downloads</code> previews names without touching anything.</p>
+</section>
+
+<footer class="wrap">
+  Built for the Hacktoberfest 2026 Open-Source AI Challenge, Week 3: Slow and Steady · Gemma 3 + Ollama · MIT licensed ·
+  <a href="https://github.com/ErikDallaqyan/hacktoberfest-project">Source on GitHub</a>
+</footer>
+
+<script>
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const mark = (ok) => ok ? '<span class="ok">✓</span>' : '<span class="no">✗</span>';
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+fetch("data/eval.json").then((r) => r.json()).then(({ summary, rows }) => {
+  // Keep a file a human named on purpose in the demo, to show it gets left alone.
+  const files = [...rows, { file: "taxes 2025 notes.pdf", kept: true }];
+  const grid = document.getElementById("grid");
+  grid.innerHTML = files.map((f, i) => `
+    <div class="file" id="f${i}">
+      ${f.secrets ? '<span class="warn">shows a key</span>' : ""}
+      <div class="pic" style="${f.thumb ? `background-image:url('${f.thumb}')` : "display:grid;place-items:center;font-size:34px"}">${f.thumb ? "" : "📄"}</div>
+      <div class="name">${esc(f.file)}</div>
+      ${f.category ? `<span class="chip">${esc(f.category)}</span>` : ""}
+    </div>`).join("");
+  document.getElementById("count").textContent = files.length;
+
+  let ran = false;
+  const go = document.getElementById("go");
+  const status = document.getElementById("status");
+  go.onclick = async () => {
+    if (ran) { location.hash = "eval"; return; }
+    ran = true; go.disabled = true;
+    let model = 0;
+    for (let i = 0; i < files.length; i++) {
+      const el = document.getElementById(`f${i}`), f = files[i];
+      if (f.kept) {
+        el.classList.add("kept");
+        status.textContent = `Left "${f.file}" alone: someone named it on purpose.`;
+        await sleep(900);
+        continue;
+      }
+      el.classList.add("reading");
+      status.textContent = `Reading ${f.file} (took Gemma ${f.seconds}s)…`;
+      await sleep(Math.min(1400, 250 + f.seconds * 160));
+      el.classList.remove("reading");
+      el.classList.add("done");
+      el.querySelector(".name").textContent = f.name;
+      model += f.seconds;
+      await sleep(150);
+    }
+    status.textContent = `Done. ${rows.length} files named in ${Math.round(model)}s of model time on a laptop. Your effort: zero clicks.`;
+    go.disabled = false;
+    go.textContent = "See how they scored ↓";
+  };
+
+  const s = summary;
+  document.getElementById("stats").innerHTML = [
+    [`${s.all_checks_passed}/${s.files}`, "passed every check"],
+    [`${s.date}/${s.files}`, "dates right"],
+    [`${s.median_seconds}s`, "median per file"],
+    [s.model, "3.3 GB, runs on 16 GB"],
+  ].map(([b, t]) => `<div class="stat"><b>${esc(b)}</b><span>${esc(t)}</span></div>`).join("");
+
+  document.querySelector("#evaltable tbody").innerHTML = rows.map((r) => `
+    <tr><td class="mono muted">${esc(r.file)}</td><td class="mono">${esc(r.name)}</td>
+    <td>${mark(r.checks.words)}</td><td>${mark(r.checks.category)} <span class="muted">${esc(r.category)}</span></td>
+    <td>${mark(r.checks.date)}</td><td>${mark(r.checks.secrets)}</td></tr>`).join("");
+});
+</script>
+</body>
+</html>

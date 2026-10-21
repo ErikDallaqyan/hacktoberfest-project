@@ -1,0 +1,191 @@
+{
+  "summary": {
+    "model": "gemma3:4b",
+    "files": 11,
+    "all_checks_passed": 9,
+    "words": 10,
+    "category": 10,
+    "date": 11,
+    "secrets": 11,
+    "median_seconds": 4.1,
+    "total_seconds": 42.6
+  },
+  "rows": [
+    {
+      "file": "Screenshot 2026-10-14 at 9.41.22 AM.png",
+      "name": "2026-10-24-skyline-air-boarding-pass-sfo-to-jfk.png",
+      "category": "travel",
+      "what": "A Skyline Air boarding pass from SFO to JFK on October 24, 2026.",
+      "secrets": false,
+      "seconds": 2.8,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/screenshot-2026-10-14-at-9-41-22-am-png.jpg"
+    },
+    {
+      "file": "Screenshot 2026-10-15 at 2.03.10 PM.png",
+      "name": "2026-10-15-python-billing-customer-id-error.png",
+      "category": "code",
+      "what": "Python terminal output displaying a KeyError: 'customer_id' error during invoice processing.",
+      "secrets": false,
+      "seconds": 4.0,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/screenshot-2026-10-15-at-2-03-10-pm-png.jpg"
+    },
+    {
+      "file": "Screenshot 2026-10-16 at 7.12.45 PM.png",
+      "name": "2026-10-16-roommates-taco-night-casa-lupita-friday.png",
+      "category": "chats",
+      "what": "Roommates group chat discussing dinner plans on Friday.",
+      "secrets": false,
+      "seconds": 1.8,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/screenshot-2026-10-16-at-7-12-45-pm-png.jpg"
+    },
+    {
+      "file": "Screenshot 2026-10-17 at 11.30.02 AM.png",
+      "name": "2026-10-17-homenest-oakland-2br-apartment-listing.png",
+      "category": "shopping",
+      "what": "HomeNest Oakland CA rental listing for a 2 bedroom apartment",
+      "secrets": false,
+      "seconds": 3.8,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/screenshot-2026-10-17-at-11-30-02-am-png.jpg"
+    },
+    {
+      "file": "Screenshot 2026-10-18 at 4.55.31 PM.png",
+      "name": "2026-10-18-acme-cloud-api-keys-production-staging.png",
+      "category": "code",
+      "what": "Acme Cloud API keys for production and staging environments",
+      "secrets": true,
+      "seconds": 4.1,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/screenshot-2026-10-18-at-4-55-31-pm-png.jpg"
+    },
+    {
+      "file": "Screenshot 2026-10-19 at 8.20.14 PM.png",
+      "name": "2026-10-19-shopwell-ergo-lift-standing-desk-walnut.png",
+      "category": "shopping",
+      "what": "Shopwell Ergo Lift Standing Desk product page with pricing and delivery details",
+      "secrets": false,
+      "seconds": 4.4,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/screenshot-2026-10-19-at-8-20-14-pm-png.jpg"
+    },
+    {
+      "file": "download.pdf",
+      "name": "2026-10-02-acme-cloud-invoice-rivers-design-llc.pdf",
+      "category": "money",
+      "what": "Acme Cloud invoice INV-20481 for Rivers Design LLC, dated October 2, 2026, with a total due of $48.00 paid with card ending 4417.",
+      "secrets": false,
+      "seconds": 3.4,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/download-pdf.jpg"
+    },
+    {
+      "file": "document (1).pdf",
+      "name": "2026-09-28-eastbay-power-bill-account.pdf",
+      "category": "money",
+      "what": "EastBay Power & Light bill for Jordan Rivers, Oakland, CA",
+      "secrets": false,
+      "seconds": 5.0,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/document-1-pdf.jpg"
+    },
+    {
+      "file": "Scan 2026-10-12.pdf",
+      "name": "2026-10-12-corner-hardware-oakland-paint-supplies-receipt.pdf",
+      "category": "shopping",
+      "what": "Corner Hardware Oakland receipt for paint supplies",
+      "secrets": false,
+      "seconds": 4.2,
+      "checks": {
+        "words": true,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": true,
+      "thumb": "img/demo/scan-2026-10-12-pdf.jpg"
+    },
+    {
+      "file": "image (3).png",
+      "name": "2026-10-21-newsletter-signups-home-nest-marketing-q3-2026.png",
+      "category": "other",
+      "what": "HomeNest marketing newsletter signups per week for Q3 2026",
+      "secrets": false,
+      "seconds": 4.2,
+      "checks": {
+        "words": true,
+        "category": false,
+        "date": true,
+        "secrets": true
+      },
+      "pass": false,
+      "thumb": "img/demo/image-3-png.jpg"
+    },
+    {
+      "file": "8f14e45fceea167a5a36dedd4bea2543.png",
+      "name": "2026-10-21-lazy-desktop-collection.png",
+      "category": "memes",
+      "what": "A humorous image depicting a sloth with the text \"Me: I'll name my files later\" and a description of a cluttered desktop with 412 screenshots.",
+      "secrets": false,
+      "seconds": 4.9,
+      "checks": {
+        "words": false,
+        "category": true,
+        "date": true,
+        "secrets": true
+      },
+      "pass": false,
+      "thumb": "img/demo/8f14e45fceea167a5a36dedd4bea2543-png.jpg"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sloth Sort</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦥</text></svg>">
+  <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">🦥</span>
+      <div>
+        <h1>Sloth Sort</h1>
+        <p class="tag">Names your files so you don't have to.</p>
+      </div>
+    </div>
+    <div class="controls">
+      <span id="pill" class="pill">Starting…</span>
+      <button id="pause" class="btn ghost" type="button">Pause</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="stats" aria-label="Totals">
+      <div class="stat"><b id="s-named">0</b><span>files named for you</span></div>
+      <div class="stat"><b id="s-kept">–</b><span>kept without changes</span></div>
+      <div class="stat"><b id="s-time">0s</b><span>of local model time</span></div>
+    </section>
+
+    <section id="backlog" class="banner" hidden>
+      <p><b id="b-count">0</b> files already in <span id="b-where"></span> still have throwaway names.</p>
+      <button id="b-go" class="btn" type="button">Tidy them</button>
+    </section>
+
+    <section class="options">
+      <label class="switch">
+        <input id="folders" type="checkbox">
+        <span>Also sort into folders like <code>money/</code>, <code>travel/</code>, <code>code/</code></span>
+      </label>
+      <span id="watching" class="muted"></span>
+    </section>
+
+    <section aria-live="polite">
+      <ol id="list" class="list"></ol>
+      <div id="empty" class="empty" hidden>
+        <div class="big" aria-hidden="true">🦥</div>
+        <p><b>Nothing to do yet.</b> Take a screenshot or download a PDF. Sloth Sort names it in about 10 seconds.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    Runs on your Mac with an open-weight model. Your files never leave this computer.
+  </footer>
+
+  <template id="row">
+    <li class="card">
+      <img class="thumb" alt="" loading="lazy">
+      <div class="body">
+        <div class="names">
+          <span class="old"></span>
+          <span class="arrow" aria-hidden="true">→</span>
+          <span class="new"></span>
+        </div>
+        <p class="what"></p>
+        <div class="meta"></div>
+        <form class="edit" hidden>
+          <input type="text" aria-label="New name" spellcheck="false">
+          <button class="btn" type="submit">Save</button>
+          <button class="btn ghost cancel" type="button">Cancel</button>
+        </form>
+      </div>
+      <div class="actions">
+        <button class="btn ghost rename" type="button">Rename</button>
+        <button class="btn ghost undo" type="button">Undo</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js?v=3"></script>
+</body>
+</html>
