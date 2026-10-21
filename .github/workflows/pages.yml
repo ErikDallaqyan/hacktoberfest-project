@@ -3,6 +3,7 @@ name: Deploy showcase site
 on:
   push:
     branches: [main]
+    # Path filters are skipped when history is rewritten, so list them but also allow manual runs.
     paths: ["site/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
