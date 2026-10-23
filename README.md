@@ -15,7 +15,7 @@ Scan 2026-10-12.pdf                      →  2026-10-12-corner-hardware-oakland
 
 Nothing leaves your computer. Screenshots are full of bank balances, private chats and API keys, so the model runs locally, and the review page is only reachable from your own machine.
 
-![Sloth Sort review page](docs/img/review.png)
+![Sloth Sort review page](docs/img/review.jpg)
 
 ## What it does
 
@@ -54,14 +54,20 @@ Then open <http://127.0.0.1:8765>. New files are named as they arrive. Old files
 
 ### Or with Docker
 
-Ollama keeps running on your computer (so it can use the GPU), and Sloth Sort runs in a container that mounts `~/Desktop` and `~/Downloads`:
+Sloth Sort ships as two images, and Ollama keeps running on your computer so it can use the GPU:
+
+| Image | What's in it |
+| --- | --- |
+| `sloth-sort-backend` | The API and folder watcher (Python). It mounts `~/Desktop` and `~/Downloads` and calls Ollama on the host. |
+| `sloth-sort-frontend` | The review page on nginx. It proxies `/api` to the backend. |
+
 
 ```bash
 ollama pull gemma3:4b
 docker compose up -d
 ```
 
-The review page is at <http://127.0.0.1:8765> and is published on `127.0.0.1` only. On a Mac, macOS may ask whether Docker can access your Desktop and Downloads folders; it needs that to rename files. Undo history lives in the `sloth-state` volume.
+The review page is at <http://127.0.0.1:8765>. Only the frontend publishes a port, and only on `127.0.0.1`; the backend is reachable only from the frontend container. On a Mac, macOS may ask whether Docker can access your Desktop and Downloads folders; it needs that to rename files. Undo history lives in the `sloth-state` volume.
 
 ### Preview first
 

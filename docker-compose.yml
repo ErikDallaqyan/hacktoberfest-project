@@ -1,11 +1,13 @@
+# Two images: the API + folder watcher (backend) and the review page on nginx (frontend).
+# Ollama stays on the host so it can use the GPU; in a container on a Mac it would run on CPU only.
 services:
-  sloth-sort:
-    build: .
-    image: sloth-sort:latest
-    container_name: sloth-sort
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    image: sloth-sort-backend:latest
+    container_name: sloth-sort-backend
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8765:8765"  # review page reachable from this computer only
     volumes:
       - ~/Desktop:/watch/Desktop
       - ~/Downloads:/watch/Downloads
@@ -15,6 +17,19 @@ services:
       - SLOTH_SORT_FOLDERS=${SLOTH_SORT_FOLDERS:-0}
     extra_hosts:
       - "host.docker.internal:host-gateway"  # reach Ollama on the host (needed on Linux)
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    image: sloth-sort-frontend:latest
+    container_name: sloth-sort-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8765:80"  # reachable from this computer only
+    depends_on:
+      backend:
+        condition: service_healthy
 
 volumes:
   sloth-state:

@@ -135,4 +135,5 @@ def thumb(row_id: int):
     raise HTTPException(404)
 
 
-app.mount("/", StaticFiles(directory=config.FRONTEND_DIR, html=True), name="frontend")
+if config.FRONTEND_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=config.FRONTEND_DIR, html=True), name="frontend")

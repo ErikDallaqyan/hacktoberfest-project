@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker compose build
-      - name: Container starts and serves the review page
+      - name: Frontend serves the page and proxies the API to the backend
         run: |
           mkdir -p ~/Desktop ~/Downloads
           docker compose up -d

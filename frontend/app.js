@@ -63,11 +63,14 @@ function chip(text, cls = "") {
   return s;
 }
 
-function renderRow(r, firstLoad) {
+function renderRow(r, firstLoad, i) {
   const li = tpl.content.firstElementChild.cloneNode(true);
   li.dataset.id = r.id;
   li.classList.add(r.status);
-  if (!seen.has(r.id) && !firstLoad) li.classList.add("fresh");
+  if (firstLoad) {
+    li.classList.add("enter");
+    li.style.animationDelay = `${Math.min(i, 12) * 45}ms`;
+  } else if (!seen.has(r.id)) li.classList.add("fresh");
   seen.add(r.id);
 
   const img = li.querySelector(".thumb");
@@ -120,7 +123,7 @@ async function refresh(force = false) {
     st = await api("/api/status");
   } catch {
     $("#pill").className = "pill bad";
-    $("#pill").textContent = "Sloth Sort isn't running. Start it with: python -m slothsort";
+    $("#pill").textContent = "Can't reach Sloth Sort. Start it with: python -m slothsort (or docker compose up -d)";
     return;
   }
   renderStatus(st);
@@ -133,7 +136,7 @@ async function refresh(force = false) {
 
   const rows = await api("/api/renames");
   const firstLoad = seen.size === 0;
-  list.replaceChildren(...rows.filter((r) => r.status !== "preview").map((r) => renderRow(r, firstLoad)));
+  list.replaceChildren(...rows.filter((r) => r.status !== "preview").map((r, i) => renderRow(r, firstLoad, i)));
   $("#empty").hidden = rows.length > 0;
 }
 

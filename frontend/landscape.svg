@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f93ab"/>
+      <stop offset=".38" stop-color="#a9b8bb"/>
+      <stop offset=".56" stop-color="#e9cfa6"/>
+      <stop offset=".66" stop-color="#f4c58e"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".62" cy=".6" r=".45">
+      <stop offset="0" stop-color="#fff1d2" stop-opacity=".9"/>
+      <stop offset=".35" stop-color="#ffd9a0" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8e9ea3"/>
+      <stop offset="1" stop-color="#a9b2ac"/>
+    </linearGradient>
+    <linearGradient id="h1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7e9a4f"/>
+      <stop offset="1" stop-color="#5d7b36"/>
+    </linearGradient>
+    <linearGradient id="h2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a9c94a"/>
+      <stop offset=".55" stop-color="#7fa834"/>
+      <stop offset="1" stop-color="#4f7a26"/>
+    </linearGradient>
+    <linearGradient id="h3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b7d453"/>
+      <stop offset=".5" stop-color="#8fb83a"/>
+      <stop offset="1" stop-color="#557f27"/>
+    </linearGradient>
+    <linearGradient id="h4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9cc23f"/>
+      <stop offset="1" stop-color="#3f6a1f"/>
+    </linearGradient>
+    <filter id="haze" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="soft" x="-5%" y="-20%" width="110%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <rect width="1600" height="1000" fill="url(#sun)"/>
+
+  <!-- distant ridge in the haze -->
+  <path filter="url(#haze)" fill="url(#far)" opacity=".85"
+        d="M-80 600 C120 585 210 590 300 596 C420 604 520 580 640 586 C760 592 860 600 980 594 C1120 586 1240 572 1380 584 C1480 592 1550 590 1680 588 V700 H-80Z"/>
+
+  <!-- far hills -->
+  <path filter="url(#soft)" fill="url(#h1)"
+        d="M-80 640 C140 610 260 618 380 640 C500 662 600 650 720 632 C860 610 980 618 1120 646 C1260 672 1380 650 1680 618 V1000 H-80Z"/>
+
+  <!-- middle hills -->
+  <path fill="url(#h2)"
+        d="M-80 700 C160 650 300 660 430 700 C560 740 640 760 780 742 C920 724 1020 676 1180 670 C1340 664 1460 700 1680 690 V1000 H-80Z"/>
+  <path fill="#ffffff" opacity=".08"
+        d="M-80 700 C160 650 300 660 430 700 C380 690 300 680 200 690 C120 698 60 712 0 726Z"/>
+
+  <!-- near hills -->
+  <path fill="url(#h3)"
+        d="M-80 800 C180 760 330 770 500 806 C670 842 760 880 940 870 C1120 860 1220 800 1400 790 C1500 785 1560 792 1680 798 V1000 H-80Z"/>
+  <path fill="#2f4a1a" opacity=".12"
+        d="M940 870 C1120 860 1220 800 1400 790 C1500 785 1560 792 1680 798 V1000 H900 C980 960 1000 910 940 870Z"/>
+
+  <!-- foreground slope -->
+  <path fill="url(#h4)"
+        d="M-80 900 C220 868 420 880 640 920 C820 952 1000 960 1220 936 C1400 916 1520 920 1680 928 V1000 H-80Z"/>
+
+  <!-- a few soft trees, bottom left -->
+  <g fill="#2c3f1d" opacity=".9" filter="url(#soft)">
+    <ellipse cx="90" cy="890" rx="70" ry="48"/>
+    <ellipse cx="170" cy="905" rx="58" ry="38"/>
+    <ellipse cx="40" cy="925" rx="60" ry="40"/>
+    <ellipse cx="250" cy="928" rx="44" ry="28"/>
+  </g>
+</svg>

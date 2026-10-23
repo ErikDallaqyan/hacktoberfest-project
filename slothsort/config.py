@@ -2,7 +2,8 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-FRONTEND_DIR = ROOT / "frontend"
+# In Docker the page is served by its own nginx image, so the API image has no frontend/ folder.
+FRONTEND_DIR = Path(os.getenv("SLOTH_FRONTEND_DIR", ROOT / "frontend"))
 
 # Where the rename journal lives. Never inside a watched folder.
 STATE_DIR = Path(os.getenv("SLOTH_STATE_DIR", Path.home() / ".slothsort"))

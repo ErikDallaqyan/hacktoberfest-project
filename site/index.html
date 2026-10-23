@@ -7,113 +7,160 @@
 <meta name="description" content="A local, open-weight model renames the screenshots and PDFs piling up on your Desktop, so you don't have to.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦥</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Liquid glass over a soft landscape, matching the app's review page. */
 :root {
-  --bg: #f6f3ec; --panel: #fffdf8; --ink: #2b2a26; --muted: #6f6c62; --line: #e4ddce;
-  --moss: #4f6b3a; --moss-soft: #e5ecd9; --bark: #8a6a4a; --warn: #a4471f; --warn-soft: #f8e4d8;
-  --win: #fbfaf6; --win-bar: #ece7da;
+  --ink: #ffffff;
+  --muted: rgba(255, 255, 255, .82);
+  --faint: rgba(255, 255, 255, .55);
+  --glass: linear-gradient(160deg, rgba(255, 255, 255, .20), rgba(255, 255, 255, .06)), rgba(28, 40, 22, .30);
+  --glass-in: linear-gradient(160deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .04));
+  --blur: blur(26px) saturate(175%);
+  --rim: linear-gradient(140deg, rgba(255, 255, 255, .85), rgba(255, 255, 255, .16) 32%, rgba(255, 255, 255, .05) 62%, rgba(255, 255, 255, .45));
+  --depth: inset 0 1px 1px rgba(255, 255, 255, .38), inset 0 -14px 28px rgba(255, 255, 255, .04), 0 14px 44px rgba(12, 22, 6, .22);
+  --green: linear-gradient(95deg, #c3c722 0%, #7dbb3a 48%, #1fa25c 100%);
+  --ok: #c9f58f; --no: #ffb39e;
+  --warn: #ffd9cc; --warn-bg: rgba(255, 112, 80, .32);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --spring: cubic-bezier(.34, 1.4, .64, 1);
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --dusk: rgba(8, 14, 30, 0);
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #1b1c18; --panel: #24251f; --ink: #ece8dc; --muted: #a19d90; --line: #36372f;
-    --moss: #a5c486; --moss-soft: #2f3a26; --bark: #c9a57e; --warn: #f0a07a; --warn-soft: #3d2a20;
-    --win: #20211c; --win-bar: #2c2d26;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #1b1c18; --panel: #24251f; --ink: #ece8dc; --muted: #a19d90; --line: #36372f;
-  --moss: #a5c486; --moss-soft: #2f3a26; --bark: #c9a57e; --warn: #f0a07a; --warn-soft: #3d2a20;
-  --win: #20211c; --win-bar: #2c2d26;
-}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --dusk: rgba(8, 14, 30, .38); } }
+:root[data-theme="dark"] { --dusk: rgba(8, 14, 30, .38); }
+
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Inter, -apple-system, "Segoe UI", sans-serif; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: #8fa7b5; color: var(--ink); font: 17px/1.65 Poppins, "Avenir Next", -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+body::before, body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+body::before { background: url("img/landscape.svg") center bottom / cover no-repeat; }
+body::after { background: linear-gradient(180deg, rgba(0, 0, 0, .06), rgba(0, 0, 0, 0) 30%, rgba(10, 20, 5, .2)), var(--dusk); }
+
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
-h1, h2 { font-family: Fraunces, Georgia, serif; letter-spacing: -0.01em; line-height: 1.15; }
-h1 { font-size: clamp(38px, 6vw, 64px); margin: 0 0 14px; }
-h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 12px; }
-h3 { margin: 0 0 6px; font-size: 18px; }
+h1, h2 { font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; text-shadow: 0 2px 18px rgba(0, 0, 0, .16); }
+h1 { font-size: clamp(36px, 6vw, 60px); margin: 0 0 16px; }
+h2 { font-size: clamp(26px, 4vw, 36px); margin: 0 0 12px; }
+h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; }
 p { margin: 0 0 14px; }
-a { color: var(--moss); }
-code { font-family: var(--mono); font-size: .86em; background: var(--panel); border: 1px solid var(--line); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+a { color: #e6ffc7; text-underline-offset: 3px; transition: color .4s var(--ease); }
+a:hover { color: #fff; }
+b { font-weight: 600; }
+code { font-family: var(--mono); font-size: .84em; background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .26); padding: 2px 8px; border-radius: 8px; overflow-wrap: anywhere; }
 .muted { color: var(--muted); }
-section { padding: 56px 0; }
-.lead { font-size: 20px; color: var(--muted); max-width: 720px; }
+.lead { font-size: 19px; color: var(--muted); max-width: 740px; }
 
-/* hero */
-.hero { padding-top: 64px; padding-bottom: 28px; }
-.badge { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); padding: 5px 12px; border-radius: 99px; margin-bottom: 22px; }
-.sloth { font-size: 56px; line-height: 1; display: block; margin-bottom: 10px; }
-.cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 15px Inter, sans-serif; padding: 11px 18px; border-radius: 11px; text-decoration: none; cursor: pointer; border: 1px solid var(--moss); background: var(--moss); color: var(--panel); }
-.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-.btn:disabled { opacity: .6; cursor: default; }
+/* ---------- glass ---------- */
+.panel, .window, .badge, .btn, .card, .stat, .table-wrap, pre, .shot {
+  position: relative;
+  box-shadow: var(--depth);
+}
+.panel, .window, .badge, .btn.ghost {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+}
+/* Inside a panel the glass is already blurred, so nested pieces only add a light sheen. */
+.card, .stat, .table-wrap, pre { background: var(--glass-in); }
+.panel::after, .window::after, .badge::after, .btn::after, .card::after, .stat::after, .table-wrap::after, pre::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: var(--rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.panel { border-radius: 34px; padding: 40px 44px; margin: 26px auto; max-width: 1008px; }
+.reveal { opacity: 0; transform: translateY(22px) scale(.99); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
 
-/* the desktop window */
-.window { background: var(--win); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -24px rgba(40, 35, 20, .35); }
-.bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--win-bar); border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
-.dots { display: flex; gap: 6px; }
-.dots i { width: 11px; height: 11px; border-radius: 50%; background: #e46b5d; }
-.dots i:nth-child(2) { background: #e9b949; } .dots i:nth-child(3) { background: #6cbf5b; }
-.bar .title { flex: 1; text-align: center; margin-right: 50px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 18px 14px; padding: 22px; }
+/* ---------- hero ---------- */
+.hero-wrap { padding-top: 56px; }
+.hero { padding: 48px 48px 44px; }
+.badge { display: inline-flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--ink); padding: 7px 16px; border-radius: 999px; margin-bottom: 24px; }
+.sloth { font-size: 56px; line-height: 1; display: block; margin-bottom: 12px; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .2)); animation: sway 6s ease-in-out infinite; transform-origin: 50% 0; width: max-content; }
+@keyframes sway { 50% { transform: rotate(4deg); } }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; font: 600 15px Poppins, "Avenir Next", sans-serif;
+  padding: 13px 26px; border-radius: 999px; text-decoration: none; cursor: pointer; border: 0;
+  background: var(--green); color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .45), 0 10px 26px rgba(31, 162, 92, .32);
+  transition: transform .45s var(--spring), filter .45s var(--ease), background .45s var(--ease);
+}
+.btn.ghost { color: var(--ink); font-weight: 500; text-shadow: none; box-shadow: var(--depth); }
+.btn:hover { color: #fff; transform: translateY(-1px) scale(1.03); filter: brightness(1.06); }
+.btn:active { transform: scale(.96); transition-duration: .15s; }
+.btn:disabled { opacity: .6; cursor: default; transform: none; }
+.btn:focus-visible { outline: 2px solid rgba(255, 255, 255, .85); outline-offset: 3px; }
+
+/* ---------- the desktop window ---------- */
+.demo { margin: 26px auto; }
+.window { border-radius: 30px; overflow: hidden; }
+.bar { display: flex; align-items: center; gap: 8px; padding: 13px 18px; background: rgba(255, 255, 255, .08); border-bottom: 1px solid rgba(255, 255, 255, .18); font-size: 13px; color: var(--muted); }
+.dots { display: flex; gap: 7px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; background: #ff6b5f; box-shadow: inset 0 1px 1px rgba(255, 255, 255, .5); }
+.dots i:nth-child(2) { background: #ffbd3e; } .dots i:nth-child(3) { background: #3fc958; }
+.bar .title { flex: 1; text-align: center; margin-right: 56px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 22px 16px; padding: 26px; }
 .file { text-align: center; font-size: 12.5px; position: relative; }
-.file .pic { width: 100%; aspect-ratio: 4/3; border-radius: 8px; border: 1px solid var(--line); background: var(--panel) center top / cover no-repeat; transition: transform .4s, box-shadow .4s; }
-.file .name { margin-top: 7px; font-family: var(--mono); font-size: 11.5px; line-height: 1.35; overflow-wrap: anywhere; min-height: 2.7em; }
-.file .chip { display: inline-block; margin-top: 4px; font-size: 11px; padding: 1px 8px; border-radius: 99px; background: var(--moss-soft); color: var(--moss); opacity: 0; transition: opacity .4s; }
-.file.reading .pic { box-shadow: 0 0 0 3px var(--bark); transform: scale(1.03); }
-.file.reading .name::after { content: " · reading…"; color: var(--bark); font-family: Inter, sans-serif; }
-.file.done .name { color: var(--moss); font-weight: 600; }
-.file.done .chip { opacity: 1; }
-.file.kept .name { color: var(--ink); }
-.file .warn { position: absolute; top: 6px; right: 6px; font-size: 11px; background: var(--warn-soft); color: var(--warn); padding: 1px 7px; border-radius: 99px; opacity: 0; transition: opacity .4s; }
+.file .pic { width: 100%; aspect-ratio: 4/3; border-radius: 16px; background: rgba(255, 255, 255, .85) center top / cover no-repeat; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .4), 0 8px 20px rgba(0, 0, 0, .16); transition: transform .7s var(--spring), box-shadow .7s var(--ease); }
+.file .name { margin-top: 9px; font-family: var(--mono); font-size: 11.5px; line-height: 1.4; overflow-wrap: anywhere; min-height: 2.8em; color: var(--muted); transition: color .6s var(--ease); }
+.file .chip { display: inline-block; margin-top: 5px; font-size: 11px; padding: 2px 10px; border-radius: 999px; background: rgba(185, 242, 122, .24); color: #eaffd4; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); opacity: 0; transform: translateY(4px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.file.reading .pic { transform: scale(1.05); box-shadow: 0 0 0 3px rgba(255, 223, 128, .85), 0 14px 30px rgba(0, 0, 0, .22); }
+.file.reading .name::after { content: " · reading…"; color: #ffe39a; font-family: Poppins, sans-serif; }
+.file.done .name { color: #fff; font-weight: 600; animation: pop .7s var(--spring); }
+.file.done .chip { opacity: 1; transform: none; }
+.file.kept .name { color: #fff; }
+@keyframes pop { from { transform: scale(.92); opacity: .3; } }
+.file .warn { position: absolute; top: 8px; right: 8px; z-index: 1; font-size: 11px; background: var(--warn-bg); color: var(--warn); padding: 2px 9px; border-radius: 999px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; transition: opacity .6s var(--ease); }
 .file.done .warn { opacity: 1; }
-.controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 14px 22px; border-top: 1px solid var(--line); background: var(--win-bar); }
+.controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px 26px; border-top: 1px solid rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .06); }
 .controls .status { font-size: 14px; color: var(--muted); }
 
-/* cards */
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
-.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-.card .ico { font-size: 26px; display: block; margin-bottom: 8px; }
+/* ---------- cards, tables, stats ---------- */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+.card { border-radius: 24px; padding: 22px; transition: transform .6s var(--ease); }
+.card:hover, .stat:hover { transform: translateY(-3px); }
+.card .ico { font-size: 28px; display: block; margin-bottom: 10px; }
 .card p { color: var(--muted); font-size: 15.5px; margin: 0; }
-
-/* table */
-.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); margin-top: 22px; }
+.table-wrap { overflow-x: auto; border-radius: 22px; margin-top: 24px; }
 table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
-th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid rgba(255, 255, 255, .14); vertical-align: top; }
 tr:last-child td { border-bottom: 0; }
-th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); font-weight: 600; }
 td.mono { font-family: var(--mono); font-size: 12.5px; overflow-wrap: anywhere; }
 #evaltable { min-width: 760px; }
-.ok { color: var(--moss); font-weight: 600; } .no { color: var(--warn); font-weight: 600; }
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
-.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
-.stat b { display: block; font: 700 30px Fraunces, Georgia, serif; }
+.ok { color: var(--ok); font-weight: 600; } .no { color: var(--no); font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+.stat { border-radius: 22px; padding: 18px 20px; transition: transform .6s var(--ease); }
+.stat b { display: block; font-size: 30px; font-weight: 700; line-height: 1.2; }
 .stat span { font-size: 14px; color: var(--muted); }
 
-.shot { width: 100%; border-radius: 14px; border: 1px solid var(--line); margin-top: 24px; display: block; }
-pre { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; overflow-x: auto; font: 14px/1.6 var(--mono); }
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; align-items: start; }
-ul.plain { padding-left: 20px; margin: 0; } ul.plain li { margin-bottom: 8px; }
-footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+.shot { width: 100%; border-radius: 22px; margin-top: 26px; display: block; }
+pre { border-radius: 20px; padding: 18px 22px; overflow-x: auto; font: 14px/1.7 var(--mono); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+ul.plain { padding-left: 20px; margin: 0; } ul.plain li { margin-bottom: 10px; }
+footer { padding: 30px 16px 60px; color: var(--muted); font-size: 14px; text-align: center; text-shadow: 0 1px 10px rgba(0, 0, 0, .3); }
 
 @media (max-width: 760px) {
   body { font-size: 16px; }
-  section { padding: 40px 0; }
+  .panel { margin: 16px 0; padding: 28px 22px; border-radius: 28px; }
+  .hero { padding: 32px 22px 30px; }
+  .hero-wrap { padding-top: 24px; }
   .cards, .two { grid-template-columns: 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
-  .grid { grid-template-columns: repeat(2, 1fr); padding: 14px; gap: 14px 10px; }
+  .grid { grid-template-columns: repeat(2, 1fr); padding: 16px; gap: 16px 12px; }
   .bar .title { margin-right: 0; }
-  .lead { font-size: 18px; }
+  .lead { font-size: 17px; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
 
-<header class="wrap hero">
+<div class="wrap hero-wrap"><header class="panel hero">
   <span class="badge">🎃 Hacktoberfest 2026 · Open-Source AI Challenge, Week 3: Slow and Steady</span>
   <span class="sloth" aria-hidden="true">🦥</span>
   <h1>Sloth Sort names your files<br>so you don't have to.</h1>
@@ -122,9 +169,9 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
     <a class="btn" href="https://github.com/ErikDallaqyan/hacktoberfest-project">View on GitHub</a>
     <a class="btn ghost" href="#run">Run it in 3 commands</a>
   </div>
-</header>
+</header></div>
 
-<section class="wrap" style="padding-top: 10px" aria-label="Demo">
+<section class="wrap demo" aria-label="Demo">
   <div class="window">
     <div class="bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="title">Desktop — <span id="count">11</span> items</span></div>
     <div class="grid" id="grid"></div>
@@ -135,7 +182,7 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
   </div>
 </section>
 
-<section class="wrap">
+<div class="wrap"><section class="panel reveal">
   <h2>You do nothing. That's the feature.</h2>
   <p class="lead">Sloth Sort sits in the background and moves at its own pace: one file at a time, about four seconds each, on a laptop.</p>
   <div class="cards">
@@ -143,9 +190,9 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
     <div class="card"><span class="ico">🤚</span><h3>It knows what to leave alone</h3><p>Only throwaway names get touched: <code>Screenshot …</code>, <code>IMG_4821</code>, <code>download (2).pdf</code>, hashes. <code>taxes 2025 notes.pdf</code> stays as you named it.</p></div>
     <div class="card"><span class="ico">↩️</span><h3>Every rename can be undone</h3><p>Each rename is written to a journal before the file moves. A local review page shows every change, with one-click undo or a retype box.</p></div>
   </div>
-</section>
+</section></div>
 
-<section class="wrap">
+<div class="wrap"><section class="panel reveal">
   <div class="two">
     <div>
       <h2>Why it has to be open and local</h2>
@@ -161,9 +208,9 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
       </ul>
     </div>
   </div>
-</section>
+</section></div>
 
-<section class="wrap">
+<div class="wrap"><section class="panel reveal">
   <h2>The model suggests. Code decides.</h2>
   <p class="lead">A small model is great at reading a boarding pass. It is not something to trust with your file system. Gemma only suggests words; plain Python decides what a filename may contain.</p>
   <div class="table-wrap"><table>
@@ -174,29 +221,29 @@ footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top:
     <tr><td>Wait until a file stops growing</td><td class="muted">No renaming half-downloaded PDFs.</td></tr>
     <tr><td>Flag passwords, keys and card numbers</td><td class="muted">The review page warns you, so a screenshot of your API keys doesn't sit on your Desktop forever.</td></tr>
   </table></div>
-</section>
+</section></div>
 
-<section class="wrap" id="eval">
+<div class="wrap"><section class="panel reveal" id="eval">
   <h2>How good are the names?</h2>
   <p class="lead">I scored Gemma 3 4B on 11 made-up files: screenshots, a text PDF, an image-only phone scan, a chart, a meme and a page full of API keys. Each name is checked for the right words, category, date and secret flag. The misses are shown too.</p>
   <div class="stats" id="stats"></div>
   <div class="table-wrap"><table id="evaltable"><thead><tr><th>Before</th><th>After</th><th>Words</th><th>Category</th><th>Date</th><th>Secret flag</th></tr></thead><tbody></tbody></table></div>
-</section>
+</section></div>
 
-<section class="wrap">
+<div class="wrap"><section class="panel reveal">
   <h2>The review page</h2>
   <p class="lead">Runs on your machine at <code>127.0.0.1:8765</code>. Undo anything, retype anything, or tidy up the backlog of old files in one click.</p>
-  <img class="shot" src="img/review.png" alt="Sloth Sort review page listing renamed files with before and after names, categories and Undo buttons" loading="lazy">
-</section>
+  <img class="shot" src="img/review.jpg" alt="Sloth Sort review page listing renamed files with before and after names, categories and Undo buttons" loading="lazy">
+</section></div>
 
-<section class="wrap" id="run">
+<div class="wrap"><section class="panel reveal" id="run">
   <h2>Run it</h2>
   <p class="lead">You need macOS or Linux, Python 3.11+ and <a href="https://ollama.com">Ollama</a>.</p>
 <pre>ollama pull gemma3:4b
 pip install -r requirements.txt
 python -m slothsort          # then open http://127.0.0.1:8765</pre>
   <p class="muted">Want to see what it would do first? <code>python -m slothsort scan ~/Downloads</code> previews names without touching anything.</p>
-</section>
+</section></div>
 
 <footer class="wrap">
   Built for the Hacktoberfest 2026 Open-Source AI Challenge, Week 3: Slow and Steady · Gemma 3 + Ollama · MIT licensed ·
@@ -207,6 +254,11 @@ python -m slothsort          # then open http://127.0.0.1:8765</pre>
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const mark = (ok) => ok ? '<span class="ok">✓</span>' : '<span class="no">✗</span>';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+}, { threshold: 0.12 }) : null;
+document.querySelectorAll(".reveal").forEach((el) => io ? io.observe(el) : el.classList.add("in"));
 
 fetch("data/eval.json").then((r) => r.json()).then(({ summary, rows }) => {
   // Keep a file a human named on purpose in the demo, to show it gets left alone.

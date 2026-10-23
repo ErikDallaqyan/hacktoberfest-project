@@ -2,7 +2,7 @@
 title: "Sloth Sort: a local Gemma 3 that names your screenshots so you don't have to"
 published: false
 tags: devchallenge, hf26challenge, gemma, opensource
-cover_image: https://erikdallaqyan.github.io/hacktoberfest-project/img/review.png
+cover_image: https://erikdallaqyan.github.io/hacktoberfest-project/img/review.jpg
 ---
 
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19)*
@@ -49,7 +49,7 @@ Press **"Let the sloth do it"** to watch a messy Desktop get renamed one file at
 
 The review page, after tidying that Desktop:
 
-![Sloth Sort review page: each row shows the old name crossed out, the new name, a one-line description, a category, and Undo and Rename buttons](https://erikdallaqyan.github.io/hacktoberfest-project/img/review.png)
+![Sloth Sort review page: each row shows the old name crossed out, the new name, a one-line description, a category, and Undo and Rename buttons](https://erikdallaqyan.github.io/hacktoberfest-project/img/review.jpg)
 
 Notice the red **"shows a password or key"** flag on the API keys screenshot. Gemma noticed the keys and the page warns you, so that screenshot doesn't sit on your Desktop forever.
 
