@@ -1,0 +1,12 @@
+.venv
+.git
+.github
+.claude
+__pycache__
+*.pyc
+.pytest_cache
+docs
+site
+tests
+scripts
+demo

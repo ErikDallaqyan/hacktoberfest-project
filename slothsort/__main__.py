@@ -53,7 +53,7 @@ def main() -> None:
     import uvicorn
 
     print(f"Sloth Sort is watching {', '.join(str(d) for d in config.WATCH_DIRS)}")
-    print(f"Review page: http://{config.HOST}:{config.PORT}")
+    print(f"Review page: http://127.0.0.1:{config.PORT}")
     uvicorn.run("slothsort.server:app", host=config.HOST, port=config.PORT, log_level="warning")
 
 

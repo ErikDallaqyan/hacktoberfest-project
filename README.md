@@ -52,6 +52,19 @@ python -m slothsort
 
 Then open <http://127.0.0.1:8765>. New files are named as they arrive. Old files already sitting there show up as a "Tidy them" button.
 
+### Or with Docker
+
+Ollama keeps running on your computer (so it can use the GPU), and Sloth Sort runs in a container that mounts `~/Desktop` and `~/Downloads`:
+
+```bash
+ollama pull gemma3:4b
+docker compose up -d
+```
+
+The review page is at <http://127.0.0.1:8765> and is published on `127.0.0.1` only. On a Mac, macOS may ask whether Docker can access your Desktop and Downloads folders; it needs that to rename files. Undo history lives in the `sloth-state` volume.
+
+### Preview first
+
 Want to see what it would do before it touches anything?
 
 ```bash

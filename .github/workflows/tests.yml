@@ -12,3 +12,18 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt pytest
       - run: python -m pytest -q
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose build
+      - name: Container starts and serves the review page
+        run: |
+          mkdir -p ~/Desktop ~/Downloads
+          docker compose up -d
+          for i in $(seq 1 30); do curl -fs localhost:8765/api/status && break; sleep 2; done
+          curl -fs localhost:8765/ | grep -q "<title>Sloth Sort"
+          curl -fs localhost:8765/api/status | python3 -c "import sys, json; assert json.load(sys.stdin)['watching'] == ['Desktop', 'Downloads']"
+      - if: failure()
+        run: docker compose logs

@@ -25,7 +25,9 @@ SORT_INTO_FOLDERS = os.getenv("SLOTH_SORT_FOLDERS", "0") == "1"
 # 1 = rename every file, not just ones with throwaway names like "Screenshot ... .png".
 RENAME_ALL = os.getenv("SLOTH_RENAME_ALL", "0") == "1"
 
-HOST = "127.0.0.1"  # the review page is for you only, never the network
+# The review page is for you only, never the network. Inside Docker it must listen on 0.0.0.0,
+# and docker-compose.yml publishes it on 127.0.0.1 only.
+HOST = os.getenv("SLOTH_HOST", "127.0.0.1")
 PORT = int(os.getenv("SLOTH_PORT", "8765"))
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".heic", ".webp", ".gif", ".tiff", ".bmp"}

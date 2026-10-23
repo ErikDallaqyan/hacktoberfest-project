@@ -1,0 +1,20 @@
+services:
+  sloth-sort:
+    build: .
+    image: sloth-sort:latest
+    container_name: sloth-sort
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8765:8765"  # review page reachable from this computer only
+    volumes:
+      - ~/Desktop:/watch/Desktop
+      - ~/Downloads:/watch/Downloads
+      - sloth-state:/state
+    environment:
+      - SLOTH_MODEL=${SLOTH_MODEL:-gemma3:4b}
+      - SLOTH_SORT_FOLDERS=${SLOTH_SORT_FOLDERS:-0}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # reach Ollama on the host (needed on Linux)
+
+volumes:
+  sloth-state:
