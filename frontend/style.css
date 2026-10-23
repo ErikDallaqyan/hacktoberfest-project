@@ -164,10 +164,16 @@ code { font-family: var(--mono); font-size: 12px; padding: 2px 7px; border-radiu
 .chip.plain { background: rgba(255, 255, 255, .08); color: var(--muted); }
 .chip.warn { background: var(--warn-bg); color: var(--warn); }
 .actions { display: flex; flex-direction: column; gap: 8px; }
+.actions .btn { padding: 7px 18px; font-size: 13.5px; }
 
 .card.undone { opacity: .8; }
 .card.undone .new { text-decoration: line-through; color: var(--faint); font-weight: 400; }
 .card.undone .old { text-decoration: none; color: var(--ink); }
+.card.deleted { opacity: .72; }
+.card.deleted .new { text-decoration: line-through; color: var(--faint); font-weight: 400; }
+.card.deleted .thumb { filter: grayscale(.8); }
+.btn.danger { color: #ffd2c4; }
+.btn.danger:hover { background: linear-gradient(160deg, rgba(255, 120, 90, .38), rgba(255, 120, 90, .18)); color: #fff; }
 .card.error .new { color: var(--warn); font-weight: 400; font-family: var(--font); }
 
 .edit { display: flex; gap: 8px; margin-top: 8px; animation: rise .5s var(--ease) both; }

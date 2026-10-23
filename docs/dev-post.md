@@ -38,7 +38,7 @@ The whole point is that you do nothing:
 
 - **It only touches throwaway names.** `Screenshot …`, `IMG_4821`, `download (2).pdf`, hashes and UUIDs get renamed. `taxes 2025 notes.pdf` is left exactly as you named it.
 - **Dates go first**, so files sort by when things happened. That's the invoice date or flight date if one is printed on the file, otherwise when the file was saved.
-- **Every rename can be undone.** A small review page on `127.0.0.1` lists every change with one-click Undo and a box to retype the name. A file you undo is never touched again.
+- **Every rename can be undone.** A small review page on `127.0.0.1` lists every change with one-click Undo and a box to retype the name. A file you undo is never touched again. Spotted junk while you're there? **Delete** sends it to Sloth Sort's trash, and **Restore** brings it back.
 - **It moves at a sloth's pace.** One file at a time, about 4 seconds each. The model unloads itself after 5 idle minutes, so it costs nothing while you aren't making clutter.
 
 ## Demo
@@ -90,7 +90,7 @@ This was the most important design choice. Gemma is great at reading a boarding 
 - **Never overwrite.** A name clash becomes `-2`, `-3`.
 - **Lowercase ASCII, 60 characters max, and the date isn't repeated** inside the title. `invoice-october-2-2026` after a `2026-10-02-` prefix was a real thing Gemma did.
 
-There are 53 tests for these rules and for the full rename → undo → retype flow, with the model stubbed out, so they run in CI without Ollama.
+There are 57 tests for these rules and for the full rename → undo → retype → delete → restore flow, with the model stubbed out, so they run in CI without Ollama.
 
 ### How good are the names?
 

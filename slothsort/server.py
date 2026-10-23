@@ -91,6 +91,16 @@ def undo(row_id: int):
     return _act(worker.undo, row_id)
 
 
+@app.post("/api/renames/{row_id}/delete")
+def delete(row_id: int):
+    return _act(worker.delete, row_id)
+
+
+@app.post("/api/renames/{row_id}/restore")
+def restore(row_id: int):
+    return _act(worker.restore, row_id)
+
+
 @app.post("/api/renames/{row_id}/rename")
 def rename(row_id: int, body: Name):
     return _act(worker.rename_to, row_id, body.name)
@@ -125,7 +135,7 @@ def thumb(row_id: int):
     r = journal.get(row_id)
     if not r:
         raise HTTPException(404)
-    for p in (r["new_path"], r["old_path"]):
+    for p in (r["new_path"], r["old_path"], r["trash_path"]):
         if p and Path(p).exists():
             try:
                 return Response(reader.thumbnail(Path(p)), media_type="image/jpeg",

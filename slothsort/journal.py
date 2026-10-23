@@ -19,16 +19,26 @@ CREATE TABLE IF NOT EXISTS renames (
   secrets INTEGER DEFAULT 0,
   seconds REAL DEFAULT 0,
   model TEXT DEFAULT '',
-  status TEXT NOT NULL,          -- renamed | undone | edited | error | preview
-  error TEXT DEFAULT ''
+  status TEXT NOT NULL,          -- renamed | undone | edited | deleted | error | preview
+  error TEXT DEFAULT '',
+  trash_path TEXT DEFAULT '',    -- where a deleted file waits, so it can be restored
+  prev_status TEXT DEFAULT ''    -- what to go back to on restore
 );
 """
+# Columns added after the first release; older journals get them on open.
+MIGRATIONS = ["ALTER TABLE renames ADD COLUMN trash_path TEXT DEFAULT ''",
+              "ALTER TABLE renames ADD COLUMN prev_status TEXT DEFAULT ''"]
 
 
 def _conn(db_path: Path | None = None) -> sqlite3.Connection:
     c = sqlite3.connect(db_path or config.DB_PATH, check_same_thread=False)
     c.row_factory = sqlite3.Row
     c.executescript(SCHEMA)
+    for sql in MIGRATIONS:
+        try:
+            c.execute(sql)
+        except sqlite3.OperationalError:
+            pass  # column already there
     return c
 
 

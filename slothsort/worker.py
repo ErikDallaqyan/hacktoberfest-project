@@ -2,6 +2,7 @@
 import logging
 import os
 import queue
+import shutil
 import threading
 import time
 from dataclasses import dataclass, field
@@ -145,6 +146,44 @@ def rename_to(row_id: int, name: str) -> dict:
     target = naming.unique_path(current.parent, slug + current.suffix.lower(), ignore=current)
     os.rename(current, target)
     journal.update(row_id, new_path=str(target), status="edited")
+    return journal.get(row_id)
+
+
+def _current_path(row: dict) -> Path:
+    return Path(row["old_path"] if row["status"] == "undone" else row["new_path"])
+
+
+def delete(row_id: int) -> dict:
+    """Move the file into Sloth Sort's trash. Nothing is erased, so Restore can always bring it back."""
+    row = journal.get(row_id)
+    if not row or row["status"] not in ("renamed", "edited", "undone"):
+        raise ValueError("This file can't be deleted from here.")
+    current = _current_path(row)
+    if not current.exists():
+        raise ValueError(f"{current.name} is no longer where Sloth Sort left it.")
+    trash = config.DB_PATH.parent / "trash"
+    trash.mkdir(parents=True, exist_ok=True)
+    target = trash / f"{row_id}-{current.name}"
+    shutil.move(current, target)  # the trash may be on another disk (a Docker volume), so not os.rename
+    journal.update(row_id, status="deleted", prev_status=row["status"], trash_path=str(target))
+    if row["status"] != "undone":
+        _remove_if_empty(current.parent, Path(row["old_path"]).parent)
+    return journal.get(row_id)
+
+
+def restore(row_id: int) -> dict:
+    row = journal.get(row_id)
+    if not row or row["status"] != "deleted":
+        raise ValueError("This file isn't in the trash.")
+    trashed = Path(row["trash_path"])
+    if not trashed.exists():
+        raise ValueError("The trashed copy is gone, so this file can't be restored.")
+    back = _current_path({**row, "status": row["prev_status"]})
+    if back.exists():
+        raise ValueError(f"Something else is already called {back.name}.")
+    back.parent.mkdir(exist_ok=True)
+    shutil.move(trashed, back)
+    journal.update(row_id, status=row["prev_status"], trash_path="")
     return journal.get(row_id)
 
 

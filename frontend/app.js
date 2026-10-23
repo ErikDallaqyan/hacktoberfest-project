@@ -83,7 +83,9 @@ function renderRow(r, firstLoad, i) {
   else nw.textContent = (r.subfolder ? `${r.subfolder}/` : "") + r.new_name;
 
   li.querySelector(".what").textContent =
-    r.status === "undone" ? `Undone. It's back to its old name, and Sloth Sort will leave it alone.` : r.what;
+    r.status === "undone" ? `Undone. It's back to its old name, and Sloth Sort will leave it alone.`
+    : r.status === "deleted" ? "Deleted. It's in Sloth Sort's trash; Restore puts it back where it was."
+    : r.what;
 
   const meta = li.querySelector(".meta");
   if (r.category) meta.append(chip(r.category));
@@ -92,8 +94,23 @@ function renderRow(r, firstLoad, i) {
   if (r.seconds) meta.append(chip(`${r.seconds}s`, "plain"));
   meta.append(chip(r.folder, "plain"));
 
-  const canAct = r.status === "renamed" || r.status === "edited";
-  li.querySelector(".actions").hidden = !canAct;
+  const named = r.status === "renamed" || r.status === "edited";
+  li.querySelector(".rename").hidden = !named;
+  li.querySelector(".undo").hidden = !named;
+  li.querySelector(".delete").hidden = !(named || r.status === "undone");
+  li.querySelector(".restore").hidden = r.status !== "deleted";
+  li.querySelector(".actions").hidden = r.status === "error";
+
+  const shown = r.status === "undone" ? r.old_name : r.new_name;
+  li.querySelector(".delete").onclick = async () => {
+    if (!confirm(`Delete "${shown}"?\n\nIt goes to Sloth Sort's trash, and you can restore it from this page.`)) return;
+    try { await api(`/api/renames/${r.id}/delete`, { method: "POST" }); refresh(true); }
+    catch (e) { alert(e.message); }
+  };
+  li.querySelector(".restore").onclick = async () => {
+    try { await api(`/api/renames/${r.id}/restore`, { method: "POST" }); refresh(true); }
+    catch (e) { alert(e.message); }
+  };
 
   li.querySelector(".undo").onclick = async () => {
     try { await api(`/api/renames/${r.id}/undo`, { method: "POST" }); refresh(true); }

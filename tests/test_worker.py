@@ -1,4 +1,6 @@
 """Rename, undo and edit end to end, with the model replaced by a stub."""
+from pathlib import Path
+
 import pytest
 from PIL import Image
 
@@ -86,3 +88,39 @@ def test_partial_downloads_are_ignored(tmp_path):
     assert not worker.wants(tmp_path / "download.pdf.crdownload")
     assert not worker.wants(tmp_path / ".Screenshot 2026-10-14 at 9.41.22 AM.png")
     assert worker.wants(tmp_path / "download.pdf")
+
+
+def test_delete_then_restore(desktop, stub_model):
+    row = worker.Worker().process(desktop / "Screenshot 2026-10-14 at 9.41.22 AM.png")
+    renamed = desktop / "2026-10-24-skyline-air-boarding-pass-sfo-to-jfk.png"
+    row = worker.delete(row["id"])
+    assert row["status"] == "deleted" and not renamed.exists()
+    assert Path(row["trash_path"]).exists()
+    row = worker.restore(row["id"])
+    assert row["status"] == "renamed" and renamed.exists()
+
+
+def test_delete_an_undone_file_restores_its_old_name(desktop, stub_model):
+    original = desktop / "Screenshot 2026-10-14 at 9.41.22 AM.png"
+    row = worker.Worker().process(original)
+    worker.undo(row["id"])
+    worker.delete(row["id"])
+    assert not original.exists()
+    assert worker.restore(row["id"])["status"] == "undone"
+    assert original.exists()
+
+
+def test_delete_from_a_category_folder_cleans_up(desktop, stub_model):
+    row = worker.Worker(sort_into_folders=True).process(desktop / "Screenshot 2026-10-14 at 9.41.22 AM.png")
+    worker.delete(row["id"])
+    assert not (desktop / "travel").exists()
+    worker.restore(row["id"])
+    assert (desktop / "travel" / "2026-10-24-skyline-air-boarding-pass-sfo-to-jfk.png").exists()
+
+
+def test_restore_never_overwrites(desktop, stub_model):
+    row = worker.Worker().process(desktop / "Screenshot 2026-10-14 at 9.41.22 AM.png")
+    worker.delete(row["id"])
+    (desktop / "2026-10-24-skyline-air-boarding-pass-sfo-to-jfk.png").write_bytes(b"new")
+    with pytest.raises(ValueError):
+        worker.restore(row["id"])

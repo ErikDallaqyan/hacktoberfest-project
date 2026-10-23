@@ -24,6 +24,7 @@ Nothing leaves your computer. Screenshots are full of bank balances, private cha
 - **Reads the file, not just the name.** Gemma 3 looks at screenshots and photos directly. For PDFs it gets the first page as an image plus the text layer, so phone scans without any text still work.
 - **Dates come first**, so files sort by when they happened: the date printed on an invoice or ticket if there is one, otherwise when the file was made.
 - **Undo is one click.** Every rename is written to a journal *before* the file moves, and the review page lets you undo or retype any name. Undone files are never touched again.
+- **Delete junk from the same page.** A screenshot you no longer need goes to Sloth Sort's own trash (in `~/.slothsort/trash`, or the `sloth-state` volume in Docker), and **Restore** puts it back where it was.
 - **Optional folders.** Flip a switch and files also move into `money/`, `travel/`, `code/`, `chats/`, `shopping/`, `work/`, `photos/` or `memes/`.
 - **Warns you about secrets.** If a screenshot shows a password, API key or full card number, the review page flags it so you can delete it.
 
